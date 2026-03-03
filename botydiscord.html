@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria | ICHEL1035</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;900&display=swap');
+        body { background: #020204; color: white; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        
+        /* Efekt siatki w tle */
+        .grid-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: linear-gradient(rgba(0, 255, 157, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 157, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Karta galerii */
+        .gallery-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-card:hover {
+            border-color: #00ff9d;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Lightbox - Nakładka */
+        #lightbox {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.9); z-index: 9999;
+            backdrop-filter: blur(15px); align-items: center; justify-content: center;
+        }
+        #lightbox img {
+            max-width: 90%; max-height: 80vh; border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0, 255, 157, 0.3);
+            animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .back-btn {
+            border: 1px solid rgba(0, 255, 157, 0.4);
+            background: rgba(0, 255, 157, 0.05);
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #00ff9d; color: black; }
+    </style>
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+
+    <nav class="p-8">
+        <a href="index.html" class="back-btn px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-tighter inline-flex items-center gap-2">
+            <i class="fas fa-chevron-left"></i> Wróć do bazy
+        </a>
+    </nav>
+
+    <header class="text-center py-10">
+        <h1 class="text-6xl font-black uppercase tracking-tighter" data-aos="fade-up">Gallery<span class="text-[#00ff9d]">.</span></h1>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 pb-20">
+        
+        <div class="gallery-card p-2 rounded-3xl" data-aos="fade-up" onclick="openMe(this)">
+            <img src="https://images.unsplash.com/photo-1614728263952-84ea206f9c45" class="w-full h-64 object-cover rounded-2xl mb-4">
+            <div class="px-4 pb-4">
+                <p class="text-[10px] text-[#00ff9d] font-bold uppercase">Archive 01</p>
+                <h2 class="font-bold text-lg uppercase">Deep Space Node</h2>
+            </div>
+        </div>
+
+        <div class="gallery-card p-2 rounded-3xl" data-aos="fade-up" data-aos-delay="100" onclick="openMe(this)">
+            <img src="https://images.unsplash.com/photo-1510511459019-5dee99c48db8" class="w-full h-64 object-cover rounded-2xl mb-4">
+            <div class="px-4 pb-4">
+                <p class="text-[10px] text-[#00ff9d] font-bold uppercase">Archive 02</p>
+                <h2 class="font-bold text-lg uppercase">Neon Circuit</h2>
+            </div>
+        </div>
+
+        <div class="gallery-card p-2 rounded-3xl" data-aos="fade-up" data-aos-delay="200" onclick="openMe(this)">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" class="w-full h-64 object-cover rounded-2xl mb-4">
+            <div class="px-4 pb-4">
+                <p class="text-[10px] text-[#00ff9d] font-bold uppercase">Archive 03</p>
+                <h2 class="font-bold text-lg uppercase">Global Uplink</h2>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="lightbox" onclick="closeMe()">
+        <span class="absolute top-10 right-10 text-4xl cursor-pointer">&times;</span>
+        <img id="lb-img" src="">
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        function openMe(element) {
+            // 1. Znajdź obrazek wewnątrz KLIKNIĘTEJ karty
+            const source = element.querySelector('img').src;
+            const lightbox = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lb-img');
+
+            // 2. Najpierw wyczyść stare źródło (to naprawi Twój błąd!)
+            lbImg.src = '';
+            
+            // 3. Ustaw nowe źródło i pokaż lightbox
+            lbImg.src = source;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMe() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
