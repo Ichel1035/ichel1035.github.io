@@ -3,55 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>un3ii | Visuals</title>
+<title>un3ii | Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--border:#111;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:var(--bg);color:#fff;padding:80px 10%;animation:fadeIn 1s ease;}
+:root{--bg:#0a0a0c;--accent:#70a1ff;--br:30px;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--bg);color:#fff;padding:60px 8%;}
+.grid-bg{position:fixed;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(255,255,255,0.05) 1px,transparent 0);background-size:40px 40px;z-index:-1;}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:80px;animation:fadeIn 1s ease;}
+h1{font-size:3.5rem;font-weight:800;letter-spacing:-2px;}
+.back{text-decoration:none;color:#555;font-weight:700;text-transform:uppercase;font-size:0.7rem;letter-spacing:2px;border:1px solid #222;padding:10px 20px;border-radius:100px;transition:0.3s;}
+.back:hover{color:#fff;border-color:#fff;}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:30px;}
+.item{background:#111;border-radius:var(--br);overflow:hidden;cursor:zoom-in;transition:0.5s cubic-bezier(0.2,1,0.3,1);position:relative;border:1px solid #1a1a1a;}
+.item:hover{transform:scale(1.03);border-color:var(--accent);box-shadow:0 30px 60px rgba(0,0,0,0.5);}
+.item img{width:100%;height:100%;object-fit:cover;transition:0.5s;}
+.overlay{position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));display:flex;align-items:flex-end;padding:30px;opacity:0;transition:0.3s;}
+.item:hover .overlay{opacity:1;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);backdrop-filter:blur(15px);display:none;justify-content:center;align-items:center;z-index:100;padding:40px;animation:fadeIn 0.3s ease;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-header{margin-bottom:100px;display:flex;justify-content:space-between;align-items:flex-end;}
-h1{font-size:5rem;font-weight:900;letter-spacing:-4px;line-height:1;}
-.back{text-decoration:none;color:#333;font-size:0.7rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;transition:0.3s;}
-.back:hover{color:#fff;}
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;}
-.work{position:relative;overflow:hidden;background:#050505;border:1px solid #111;transition:0.6s cubic-bezier(0.16,1,0.3,1);}
-.work:hover{transform:translateY(-10px);border-color:#333;box-shadow:0 20px 40px rgba(0,0,0,0.5);}
-.work img{width:100%;height:auto;display:block;opacity:0.4;transition:0.8s;filter:grayscale(1);}
-.work:hover img{opacity:1;filter:grayscale(0);transform:scale(1.05);}
-.work-info{position:absolute;bottom:0;left:0;padding:40px;width:100%;background:linear-gradient(transparent,rgba(0,0,0,0.9));opacity:0;transition:0.4s;}
-.work:hover .work-info{opacity:1;}
-.tag{font-size:0.6rem;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:10px;display:block;}
-.title{font-size:1.2rem;font-weight:800;letter-spacing:-1px;}
-footer{margin-top:100px;padding:40px 0;border-top:1px solid #111;text-align:center;font-size:0.6rem;letter-spacing:4px;color:#222;text-transform:uppercase;font-weight:800;}
-@media (max-width:900px){.gallery{grid-template-columns:1fr;}h1{font-size:3rem;}}
+.modal-content{background:#111;border-radius:var(--br);max-width:1100px;width:100%;display:grid;grid-template-columns:1.5fr 1fr;overflow:hidden;border:1px solid #222;}
+.modal-img{width:100%;height:600px;object-fit:cover;background:#000;}
+.modal-side{padding:50px;display:flex;flex-direction:column;justify-content:center;position:relative;}
+.close{position:absolute;top:30px;right:30px;cursor:pointer;font-size:1.5rem;color:#555;}
+.modal-side h2{font-size:2rem;margin-bottom:15px;}
+.modal-side p{color:#888;line-height:1.6;margin-bottom:30px;}
+.modal-btn{padding:15px;background:#fff;color:#000;text-align:center;text-decoration:none;font-weight:800;border-radius:15px;}
+footer{margin-top:100px;text-align:center;padding:40px;color:#222;font-size:0.7rem;letter-spacing:3px;font-weight:800;}
+@media (max-width:900px){.modal-content{grid-template-columns:1fr;}.modal-img{height:300px;}.modal-side{padding:30px;}}
 </style>
 </head>
 <body>
-<a href="un3ii.html" class="back">← Exit Gallery</a>
+<div class="grid-bg"></div>
 <header>
-<div>
-<span style="color:#222;font-weight:900;letter-spacing:5px;">ARCHIVE 2024-26</span>
-<h1>SELECTED<br>WORKS.</h1>
-</div>
+<h1>Visual Works.</h1>
+<a href="un3ii.html" class="back">Powrót</a>
 </header>
 <div class="gallery">
-<div class="work">
-<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+A">
-<div class="work-info"><span class="tag">Branding</span><div class="title">Visual Identity #01</div></div>
+<div class="item" onclick="openModal('https://via.placeholder.com/1200x800', 'NexCode Branding', 'Projekt identyfikacji wizualnej stworzony dla społeczności NexCode. Minimalizm i nowoczesność.')">
+<img src="https://via.placeholder.com/600x600/111/fff?text=Work+1">
+<div class="overlay"><span>Branding</span></div>
 </div>
-<div class="work">
-<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+B">
-<div class="work-info"><span class="tag">Digital Art</span><div class="title">NexCode Poster</div></div>
+<div class="item" onclick="openModal('https://via.placeholder.com/1200x800', 'Cyber Abstract', 'Eksperymentalna grafika 3D wykorzystująca efekty glitch i neonowe oświetlenie.')">
+<img src="https://via.placeholder.com/600x600/111/fff?text=Work+2">
+<div class="overlay"><span>Digital Art</span></div>
 </div>
-<div class="work">
-<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+C">
-<div class="work-info"><span class="tag">UI/UX</span><div class="title">Web Interface</div></div>
+<div class="item" onclick="openModal('https://via.placeholder.com/1200x800', 'UI Concept', 'Projekt interfejsu aplikacji mobilnej w stylu Glassmorphism.')">
+<img src="https://via.placeholder.com/600x600/111/fff?text=Work+3">
+<div class="overlay"><span>Interface Design</span></div>
 </div>
-<div class="work">
-<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+D">
-<div class="work-info"><span class="tag">Illustration</span><div class="title">Character Study</div></div>
+</div>
+<div id="modal" class="modal">
+<div class="modal-content">
+<img id="m-img" src="" class="modal-img">
+<div class="modal-side">
+<div class="close" onclick="closeModal()">×</div>
+<h2 id="m-title">Tytuł Projektu</h2>
+<p id="m-desc">Opis projektu pojawi się tutaj.</p>
+<a href="#" class="modal-btn">Full Resolution</a>
+</div>
 </div>
 </div>
 <footer>Designed by Ichel1035</footer>
+<script>
+function openModal(img, title, desc){
+document.getElementById('m-img').src=img;
+document.getElementById('m-title').innerText=title;
+document.getElementById('m-desc').innerText=desc;
+document.getElementById('modal').style.display='flex';
+}
+function closeModal(){
+document.getElementById('modal').style.display='none';
+}
+window.onclick=function(e){if(e.target==document.getElementById('modal'))closeModal();}
+</script>
 </body>
 </html>
