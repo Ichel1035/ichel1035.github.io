@@ -3,57 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>un3ii | Official</title>
+<title>un3ii | Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#020202;--accent:#ffffff;--dim:#444;--speed:0.6s;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:var(--bg);color:var(--accent);height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative;}
-body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%, #111 0%, transparent 70%);z-index:-1;animation:pulse 8s infinite alternate;}
-@keyframes pulse{from{transform:scale(1);}to{transform:scale(1.2);}}
-nav{padding:50px 10%;display:flex;justify-content:space-between;align-items:center;animation:slideDown var(--speed) ease;}
-@keyframes slideDown{from{transform:translateY(-20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.logo{font-size:1.8rem;font-weight:900;letter-spacing:-2px;background:linear-gradient(to right,#fff,#444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.nav-links{display:flex;gap:50px;}
-.nav-link{text-decoration:none;color:var(--dim);font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:var(--speed);cursor:pointer;border:none;background:none;position:relative;}
-.nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:1px;background:#fff;transition:0.3s;}
-.nav-link:hover{color:#fff;text-shadow:0 0 20px #fff;}
-.nav-link:hover::after{width:100%;}
-main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;animation:zoomIn var(--speed) ease;}
-@keyframes zoomIn{from{transform:scale(0.95);opacity:0;}to{transform:scale(1);opacity:1;}}
-.hero-title{font-size:clamp(5rem,20vw,12rem);font-weight:900;letter-spacing:-8px;line-height:0.8;margin-bottom:20px;filter:drop-shadow(0 0 30px rgba(255,255,255,0.1));}
-.nex-card{padding:30px;border-left:1px solid #222;background:rgba(255,255,255,0.01);backdrop-filter:blur(10px);text-align:left;max-width:350px;transition:0.5s;}
-.nex-card:hover{border-left-color:#fff;background:rgba(255,255,255,0.03);}
-.nex-card p{color:var(--dim);font-size:0.8rem;line-height:1.6;margin-bottom:20px;}
-.btn{padding:12px 25px;background:transparent;border:1px solid #333;color:#fff;text-decoration:none;font-size:0.7rem;font-weight:900;letter-spacing:2px;transition:0.3s;}
-.btn:hover{background:#fff;color:#000;border-color:#fff;box-shadow:0 0 30px rgba(255,255,255,0.2);}
-footer{padding:30px;text-align:center;font-size:0.6rem;letter-spacing:4px;color:#222;text-transform:uppercase;font-weight:800;}
-#toast{position:fixed;bottom:50px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:12px 40px;font-weight:900;font-size:0.7rem;opacity:0;transition:0.5s;pointer-events:none;z-index:999;}
-#toast.show{opacity:1;bottom:70px;}
+:root{--bg:#08080a;--card:rgba(20,20,25,0.7);--accent:#70a1ff;--text:#efefef;--br:24px;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;position:relative;}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(circle at center,black,transparent);z-index:-1;animation:gridMove 20s linear infinite;}
+@keyframes gridMove{from{background-position:0 0;}to{background-position:50px 50px;}}
+nav{padding:30px 8%;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(10px);z-index:10;}
+.logo{font-size:1.6rem;font-weight:800;letter-spacing:-1px;background:linear-gradient(45deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:15px;background:rgba(255,255,255,0.05);padding:8px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);}
+.nav-link{text-decoration:none;color:#aaa;font-size:0.85rem;font-weight:600;padding:10px 25px;border-radius:100px;transition:0.4s;cursor:pointer;border:none;background:none;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.1);box-shadow:0 0 20px rgba(112,161,255,0.2);}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;}
+.main-card{background:var(--card);backdrop-filter:blur(20px);padding:60px;border-radius:var(--br);border:1px solid rgba(255,255,255,0.1);text-align:center;box-shadow:0 40px 100px rgba(0,0,0,0.5);animation:float 6s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+.hero-text{font-size:5rem;font-weight:800;letter-spacing:-3px;margin-bottom:10px;}
+.sub-text{color:#666;font-size:1rem;margin-bottom:40px;letter-spacing:1px;}
+.nex-box{background:rgba(112,161,255,0.05);border-radius:20px;padding:25px;border:1px solid rgba(112,161,255,0.2);max-width:400px;transition:0.3s;}
+.nex-box:hover{transform:scale(1.02);background:rgba(112,161,255,0.1);}
+.nex-box h3{font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:10px;}
+.nex-btn{display:inline-block;margin-top:20px;padding:12px 30px;background:var(--accent);color:#000;text-decoration:none;font-weight:800;border-radius:12px;transition:0.3s;}
+.nex-btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(112,161,255,0.4);}
+footer{padding:20px;text-align:center;font-size:0.7rem;color:#333;font-weight:600;letter-spacing:2px;}
+#toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#000;padding:12px 30px;border-radius:15px;font-weight:800;transition:0.5s cubic-bezier(0.175,0.885,0.32,1.275);opacity:0;}
+#toast.active{transform:translateX(-50%) translateY(0);opacity:1;}
 </style>
 </head>
 <body>
+<div class="grid-bg"></div>
 <nav>
-<div class="logo">unrii.</div>
+<div class="logo">un3ii.</div>
 <div class="nav-links">
-<a href="un3ii-p.html" target="_blank" class="nav-link">portfolio</a>
-<button onclick="copyDC()" class="nav-link">kontakt</button>
+<a href="un3ii-p.html" target="_blank" class="nav-link">Portfolio</a>
+<button onclick="copyDC()" class="nav-link">Kontakt</button>
 </div>
 </nav>
 <main>
-<h1 class="hero-title">UNRII</h1>
-<div class="nex-card">
-<p>Partnered with <b>NexCode</b>. Digital craftsmanship and high-fidelity graphics designed for the next generation.</p>
-<a href="https://discord.gg/nexcode" target="_blank" class="btn">DISCORD SERVER</a>
+<div class="main-card">
+<h1 class="hero-text">Creative Hub</h1>
+<p class="sub-text">Digital Arts & High-End Design</p>
+<div class="nex-box">
+<h3>NEXCODE PARTNER</h3>
+<p style="font-size:0.85rem;color:#999;">Explore the boundaries of digital creation with NexCode and un3ii.</p>
+<a href="https://discord.gg/nexcode" target="_blank" class="nex-btn">Join Community</a>
+</div>
 </div>
 </main>
-<div id="toast">DISCORD TAG COPIED</div>
+<div id="toast">DISCORD SKOPIOWANY!</div>
 <footer>Designed by Ichel1035</footer>
 <script>
 function copyDC(){
-navigator.clipboard.writeText("un3ii_discord");
+navigator.clipboard.writeText("un3ii_nick");
 const t=document.getElementById('toast');
-t.classList.add('show');
-setTimeout(()=>t.classList.remove('show'),2000);
+t.classList.add('active');
+setTimeout(()=>t.classList.remove('active'),2500);
 }
 </script>
 </body>
