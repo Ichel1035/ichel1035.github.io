@@ -3,74 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>un3ii | Vault</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+<title>UN3II | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050505;--br:40px;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:#fff;font-family:'Space Grotesk',sans-serif;padding:0 6%;}
-.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:100px 100px;z-index:-1;}
-header{height:40vh;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #111;}
-.back-btn{text-decoration:none;color:#333;font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;margin-bottom:20px;display:block;transition:0.3s;}
+:root{--bg:#050505;--accent:#fff;--glass:rgba(255,255,255,0.02);--border:rgba(255,255,255,0.08);--br:28px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+body{background:var(--bg);color:#fff;font-family:'Space Grotesk',sans-serif;overflow-x:hidden;min-height:100vh;}
+.noise{position:fixed;inset:0;z-index:9999;opacity:0.03;pointer-events:none;background:url('https://grainy-gradients.vercel.app/noise.svg');}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:80px 80px;z-index:-1;}
+header{padding:80px 8% 40px;display:flex;flex-direction:column;gap:20px;}
+.back-btn{text-decoration:none;color:#444;font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;font-weight:700;transition:0.3s;width:fit-content;}
 .back-btn:hover{color:#fff;}
-h1{font-family:'Syncopate',sans-serif;font-size:5rem;letter-spacing:-5px;}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(450px,1fr));gap:50px;padding:100px 0;}
-.work-item{position:relative;border-radius:var(--br);overflow:hidden;background:#0a0a0a;border:1px solid #151515;cursor:pointer;transition:0.6s cubic-bezier(0.2,1,0.3,1);}
-.work-item:hover{transform:scale(0.98);border-color:#333;}
-.work-item img{width:100%;height:600px;object-fit:cover;opacity:0.6;transition:0.8s ease;filter:grayscale(1);}
-.work-item:hover img{opacity:1;filter:grayscale(0);transform:scale(1.1);}
-.work-info{position:absolute;bottom:0;left:0;width:100%;padding:50px;background:linear-gradient(transparent,rgba(0,0,0,0.9));display:flex;justify-content:space-between;align-items:flex-end;}
-.work-info h3{font-size:1.5rem;font-weight:700;}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.98);z-index:1000;display:none;padding:5%;}
-.modal-content{width:100%;height:100%;display:grid;grid-template-columns:1.2fr 0.8fr;gap:50px;animation:zoom 0.5s ease;}
-@keyframes zoom{from{transform:scale(1.1);opacity:0;}to{transform:scale(1);opacity:1;}}
-.m-img-container{border-radius:var(--br);overflow:hidden;background:#000;}
-.m-img-container img{width:100%;height:100%;object-fit:contain;}
-.m-text{display:flex;flex-direction:column;justify-content:center;padding-right:5%;}
-.m-text h2{font-family:'Syncopate',sans-serif;font-size:3rem;margin-bottom:20px;}
-.m-text p{color:#666;font-size:1.1rem;line-height:1.6;margin-bottom:40px;}
-.close-modal{position:absolute;top:40px;right:40px;font-size:2rem;cursor:pointer;color:#444;transition:0.3s;}
-.close-modal:hover{color:#fff;}
-footer{padding:60px 0;text-align:center;border-top:1px solid #111;color:#1a1a1a;font-weight:800;letter-spacing:10px;text-transform:uppercase;font-size:0.6rem;}
-@media (max-width:1000px){.modal-content{grid-template-columns:1fr;overflow-y:auto;}.m-img-container{height:300px;}}
+h1{font-family:'Syncopate',sans-serif;font-size:clamp(2.5rem,10vw,6rem);letter-spacing:-5px;line-height:0.9;}
+.filter-nav{padding:0 8% 40px;display:flex;gap:12px;flex-wrap:wrap;}
+.filter-btn{padding:12px 28px;background:var(--glass);border:1px solid var(--border);color:#555;border-radius:100px;cursor:pointer;font-weight:700;font-size:0.75rem;transition:0.4s;text-transform:uppercase;letter-spacing:1px;}
+.filter-btn.active, .filter-btn:hover{background:#fff;color:#000;border-color:#fff;box-shadow:0 0 20px rgba(255,255,255,0.2);}
+.gallery-grid{padding:0 8% 120px;display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:40px;}
+.work-card{background:var(--glass);border-radius:var(--br);overflow:hidden;border:1px solid var(--border);transition:0.7s cubic-bezier(0.19,1,0.22,1);cursor:pointer;position:relative;}
+.work-card:hover{transform:translateY(-15px);border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.04);}
+.img-box{width:100%;height:450px;overflow:hidden;background:#000;}
+.img-box img{width:100%;height:100%;object-fit:cover;opacity:0.4;transition:0.8s;filter:grayscale(1);}
+.work-card:hover .img-box img{opacity:1;filter:grayscale(0);transform:scale(1.08);}
+.work-meta{padding:30px;display:flex;justify-content:space-between;align-items:flex-end;}
+.work-meta h3{font-size:1.4rem;font-weight:700;letter-spacing:-1px;}
+.work-meta span{color:#444;font-size:0.65rem;text-transform:uppercase;letter-spacing:3px;font-weight:800;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(25px);cursor:zoom-out;}
+.modal-img{max-width:95%;max-height:85vh;border-radius:15px;box-shadow:0 0 80px rgba(0,0,0,0.8);animation:pop 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes pop{from{transform:scale(0.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+footer{padding:80px;text-align:center;border-top:1px solid var(--border);color:#1a1a1a;font-size:0.65rem;letter-spacing:10px;text-transform:uppercase;font-weight:900;}
+@media (max-width:768px){.gallery-grid{grid-template-columns:1fr;}h1{font-size:3.5rem;}.img-box{height:300px;}}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
+<div class="noise"></div>
+<div class="grid"></div>
 <header>
-<a href="un3ii.html" class="back-btn">← Back Home</a>
-<h1>WORKS.</h1>
+<a href="un3ii.html" class="back-btn">← Powrót do strony głównej</a>
+<h1>GALERIA<br>PROJEKTÓW.</h1>
 </header>
-<div class="gallery">
-<div class="work-item" onclick="openM('https://via.placeholder.com/1200x1600', 'Project Alpha', 'Opis projektu, który wygląda zajebiście. Tutaj możesz wpisać cokolwiek o swojej pracy.')">
-<img src="https://via.placeholder.com/800x1000/111/fff?text=GRAPHIC+1">
-<div class="work-info"><h3>Alpha</h3><span>2026</span></div>
+<div class="filter-nav">
+<button class="filter-btn active" onclick="filter('all')">Wszystko</button>
+<button class="filter-btn" onclick="filter('logo')">Logotypy</button>
+<button class="filter-btn" onclick="filter('avatary')">Awatary</button>
+<button class="filter-btn" onclick="filter('miniaturki')">Miniaturki</button>
+<button class="filter-btn" onclick="filter('banery')">Banery</button>
 </div>
-<div class="work-item" onclick="openM('https://via.placeholder.com/1200x1600', 'Project Beta', 'Kolejna niesamowita praca dla NexCode. Grafika najwyższej jakości.')">
-<img src="https://via.placeholder.com/800x1000/111/fff?text=GRAPHIC+2">
-<div class="work-info"><h3>Beta</h3><span>2026</span></div>
-</div>
-</div>
-<div id="modal" class="modal">
-<div class="close-modal" onclick="closeM()">×</div>
-<div class="modal-content">
-<div class="m-img-container"><img id="m-img" src=""></div>
-<div class="m-text">
-<h2 id="m-title">Title</h2>
-<p id="m-desc">Description</p>
-<div style="height:1px;background:#222;width:100%;"></div>
+<div class="gallery-grid" id="gallery">
+<div class="work-card banery">
+<div class="img-box"><img src="un3ii/1.png" onclick="view(this.src)"></div>
+<div class="work-meta"><div><h3>BANER</h3><span>Dla SZEFITKA</span></div></div>
 </div>
 </div>
+<div id="modal" class="modal" onclick="this.style.display='none'">
+<img id="modal-img" src="" class="modal-img">
 </div>
 <footer>Designed by Ichel1035</footer>
 <script>
-function openM(i,t,d){
-document.getElementById('m-img').src=i;
-document.getElementById('m-title').innerText=t;
-document.getElementById('m-desc').innerText=d;
-document.getElementById('modal').style.display='block';
+function filter(c){
+const cards=document.querySelectorAll('.work-card');
+const btns=document.querySelectorAll('.filter-btn');
+btns.forEach(b=>b.classList.remove('active'));
+event.target.classList.add('active');
+cards.forEach(card=>{
+if(c==='all' || card.classList.contains(c)){
+card.style.display='block';
+setTimeout(()=>card.style.opacity='1',10);
+} else {
+card.style.opacity='0';
+setTimeout(()=>card.style.display='none',300);
 }
-function closeM(){document.getElementById('modal').style.display='none';}
+});
+}
+function view(src){
+document.getElementById('modal-img').src=src;
+document.getElementById('modal').style.display='flex';
+}
 </script>
 </body>
 </html>
