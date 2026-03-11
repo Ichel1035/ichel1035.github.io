@@ -3,52 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>un3ii | Home</title>
+<title>un3ii | Official</title>
 <style>
-:root{--bg:#050505;--accent:#fff;--secondary:#666;--font:'Inter',sans-serif;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font);}
-body{background:var(--bg);color:var(--accent);height:100vh;display:flex;flex-direction:column;overflow:hidden;animation:fadeIn 1.2s ease;}
-@keyframes fadeIn{from{opacity:0;filter:blur(10px);}to{opacity:1;filter:blur(0);}}
-nav{padding:40px 8%;display:flex;justify-content:space-between;align-items:center;z-index:10;}
-.logo{font-size:1.4rem;font-weight:900;text-transform:lowercase;letter-spacing:-1px;}
-.nav-links{display:flex;gap:40px;}
-.nav-link{text-decoration:none;color:var(--secondary);font-size:0.85rem;font-weight:600;transition:0.3s;cursor:pointer;border:none;background:none;text-transform:uppercase;letter-spacing:1px;}
-.nav-link:hover{color:var(--accent);text-shadow:0 0 15px rgba(255,255,255,0.6);}
-main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
-.hero-title{font-size:clamp(4rem,15vw,8rem);font-weight:900;line-height:0.9;margin-bottom:30px;background:linear-gradient(180deg,#fff 30%,#222 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.nex-box{padding:25px;border:1px solid #111;border-radius:1px;background:rgba(255,255,255,0.01);backdrop-filter:blur(5px);transition:0.4s;}
-.nex-box:hover{border-color:var(--accent);background:rgba(255,255,255,0.03);}
-.nex-box h3{font-size:0.7rem;letter-spacing:4px;color:var(--secondary);margin-bottom:15px;}
-.nex-link{display:inline-block;padding:12px 30px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;font-size:0.75rem;font-weight:700;transition:0.3s;}
-.nex-link:hover{background:var(--accent);color:var(--bg);}
-#toast{position:fixed;top:40px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--bg);padding:10px 30px;font-size:0.8rem;font-weight:800;border-radius:2px;opacity:0;transition:0.5s cubic-bezier(0.19,1,0.22,1);pointer-events:none;}
-#toast.active{opacity:1;top:60px;}
+:root{--bg:#020202;--accent:#ffffff;--dim:#444;--speed:0.6s;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:var(--accent);height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%, #111 0%, transparent 70%);z-index:-1;animation:pulse 8s infinite alternate;}
+@keyframes pulse{from{transform:scale(1);}to{transform:scale(1.2);}}
+nav{padding:50px 10%;display:flex;justify-content:space-between;align-items:center;animation:slideDown var(--speed) ease;}
+@keyframes slideDown{from{transform:translateY(-20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.logo{font-size:1.8rem;font-weight:900;letter-spacing:-2px;background:linear-gradient(to right,#fff,#444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:50px;}
+.nav-link{text-decoration:none;color:var(--dim);font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:var(--speed);cursor:pointer;border:none;background:none;position:relative;}
+.nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:1px;background:#fff;transition:0.3s;}
+.nav-link:hover{color:#fff;text-shadow:0 0 20px #fff;}
+.nav-link:hover::after{width:100%;}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;animation:zoomIn var(--speed) ease;}
+@keyframes zoomIn{from{transform:scale(0.95);opacity:0;}to{transform:scale(1);opacity:1;}}
+.hero-title{font-size:clamp(5rem,20vw,12rem);font-weight:900;letter-spacing:-8px;line-height:0.8;margin-bottom:20px;filter:drop-shadow(0 0 30px rgba(255,255,255,0.1));}
+.nex-card{padding:30px;border-left:1px solid #222;background:rgba(255,255,255,0.01);backdrop-filter:blur(10px);text-align:left;max-width:350px;transition:0.5s;}
+.nex-card:hover{border-left-color:#fff;background:rgba(255,255,255,0.03);}
+.nex-card p{color:var(--dim);font-size:0.8rem;line-height:1.6;margin-bottom:20px;}
+.btn{padding:12px 25px;background:transparent;border:1px solid #333;color:#fff;text-decoration:none;font-size:0.7rem;font-weight:900;letter-spacing:2px;transition:0.3s;}
+.btn:hover{background:#fff;color:#000;border-color:#fff;box-shadow:0 0 30px rgba(255,255,255,0.2);}
+footer{padding:30px;text-align:center;font-size:0.6rem;letter-spacing:4px;color:#222;text-transform:uppercase;font-weight:800;}
+#toast{position:fixed;bottom:50px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:12px 40px;font-weight:900;font-size:0.7rem;opacity:0;transition:0.5s;pointer-events:none;z-index:999;}
+#toast.show{opacity:1;bottom:70px;}
 </style>
 </head>
 <body>
 <nav>
-<div class="logo">un3ii</div>
+<div class="logo">unrii.</div>
 <div class="nav-links">
 <a href="un3ii-p.html" target="_blank" class="nav-link">portfolio</a>
-<button onclick="copyDiscord()" class="nav-link">kontakt</button>
+<button onclick="copyDC()" class="nav-link">kontakt</button>
 </div>
 </nav>
 <main>
-<h1 class="hero-title">UNRII<br>DESIGN</h1>
-<div class="nex-box">
-<h3>NEXCODE ECOSYSTEM</h3>
-<p style="color:#444;margin-bottom:20px;font-size:0.8rem;">Innovation & Community development</p>
-<a href="https://discord.gg/nexcode" target="_blank" class="nex-link">DISCORD SERVER</a>
+<h1 class="hero-title">UNRII</h1>
+<div class="nex-card">
+<p>Partnered with <b>NexCode</b>. Digital craftsmanship and high-fidelity graphics designed for the next generation.</p>
+<a href="https://discord.gg/nexcode" target="_blank" class="btn">DISCORD SERVER</a>
 </div>
 </main>
-<div id="toast">DISCORD COPIED TO CLIPBOARD</div>
+<div id="toast">DISCORD TAG COPIED</div>
+<footer>Designed by Ichel1035</footer>
 <script>
-function copyDiscord(){
-const nick="un3ii_nick";
-navigator.clipboard.writeText(nick);
+function copyDC(){
+navigator.clipboard.writeText("un3ii_discord");
 const t=document.getElementById('toast');
-t.classList.add('active');
-setTimeout(()=>t.classList.remove('active'),2500);
+t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),2000);
 }
 </script>
 </body>
