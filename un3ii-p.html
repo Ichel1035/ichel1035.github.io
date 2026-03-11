@@ -3,50 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>un3ii | Works</title>
+<title>un3ii | Visuals</title>
 <style>
-:root{--bg:#000;--border:#151515;}
+:root{--bg:#000;--border:#111;}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:var(--bg);color:#fff;padding:60px 8%;}
-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px;}
-h1{font-size:4rem;font-weight:900;letter-spacing:-3px;}
-.back{text-decoration:none;color:#444;font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;transition:0.3s;}
+body{background:var(--bg);color:#fff;padding:80px 10%;animation:fadeIn 1s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+header{margin-bottom:100px;display:flex;justify-content:space-between;align-items:flex-end;}
+h1{font-size:5rem;font-weight:900;letter-spacing:-4px;line-height:1;}
+.back{text-decoration:none;color:#333;font-size:0.7rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;transition:0.3s;}
 .back:hover{color:#fff;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);}
-.item{background:var(--bg);aspect-ratio:1/1;position:relative;overflow:hidden;cursor:crosshair;}
-.item img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:0.7s cubic-bezier(0.19,1,0.22,1);opacity:0.6;}
-.item:hover img{filter:grayscale(0);opacity:1;transform:scale(1.05);}
-.item-desc{position:absolute;bottom:30px;left:30px;opacity:0;transition:0.4s;transform:translateY(10px);}
-.item:hover .item-desc{opacity:1;transform:translateY(0);}
-.item-desc span{background:#fff;color:#000;padding:5px 12px;font-size:0.7rem;font-weight:800;text-transform:uppercase;}
-@media (max-width:768px){.grid{grid-template-columns:1fr;}h1{font-size:2.5rem;}}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;}
+.work{position:relative;overflow:hidden;background:#050505;border:1px solid #111;transition:0.6s cubic-bezier(0.16,1,0.3,1);}
+.work:hover{transform:translateY(-10px);border-color:#333;box-shadow:0 20px 40px rgba(0,0,0,0.5);}
+.work img{width:100%;height:auto;display:block;opacity:0.4;transition:0.8s;filter:grayscale(1);}
+.work:hover img{opacity:1;filter:grayscale(0);transform:scale(1.05);}
+.work-info{position:absolute;bottom:0;left:0;padding:40px;width:100%;background:linear-gradient(transparent,rgba(0,0,0,0.9));opacity:0;transition:0.4s;}
+.work:hover .work-info{opacity:1;}
+.tag{font-size:0.6rem;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:10px;display:block;}
+.title{font-size:1.2rem;font-weight:800;letter-spacing:-1px;}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid #111;text-align:center;font-size:0.6rem;letter-spacing:4px;color:#222;text-transform:uppercase;font-weight:800;}
+@media (max-width:900px){.gallery{grid-template-columns:1fr;}h1{font-size:3rem;}}
 </style>
 </head>
 <body>
-<a href="un3ii.html" class="back">Back to start</a>
+<a href="un3ii.html" class="back">← Exit Gallery</a>
 <header>
 <div>
-<p style="color:#555;font-size:0.8rem;letter-spacing:3px;margin-bottom:10px;">GALLERY</p>
-<h1>VISUALS</h1>
+<span style="color:#222;font-weight:900;letter-spacing:5px;">ARCHIVE 2024-26</span>
+<h1>SELECTED<br>WORKS.</h1>
 </div>
 </header>
-<div class="grid">
-<div class="item">
-<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+1">
-<div class="item-desc"><span>Cover Art</span></div>
+<div class="gallery">
+<div class="work">
+<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+A">
+<div class="work-info"><span class="tag">Branding</span><div class="title">Visual Identity #01</div></div>
 </div>
-<div class="item">
-<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+2">
-<div class="item-desc"><span>Branding</span></div>
+<div class="work">
+<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+B">
+<div class="work-info"><span class="tag">Digital Art</span><div class="title">NexCode Poster</div></div>
 </div>
-<div class="item">
-<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+3">
-<div class="item-desc"><span>UI Design</span></div>
+<div class="work">
+<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+C">
+<div class="work-info"><span class="tag">UI/UX</span><div class="title">Web Interface</div></div>
 </div>
-<div class="item">
-<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+4">
-<div class="item-desc"><span>NexCode Asset</span></div>
+<div class="work">
+<img src="https://via.placeholder.com/1200x800/0a0a0a/fff?text=GRAPHIC+D">
+<div class="work-info"><span class="tag">Illustration</span><div class="title">Character Study</div></div>
 </div>
 </div>
+<footer>Designed by Ichel1035</footer>
 </body>
 </html>
