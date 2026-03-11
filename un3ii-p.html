@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>un3ii | Works</title>
+<style>
+:root{--bg:#000;--border:#151515;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:#fff;padding:60px 8%;}
+header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px;}
+h1{font-size:4rem;font-weight:900;letter-spacing:-3px;}
+.back{text-decoration:none;color:#444;font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;transition:0.3s;}
+.back:hover{color:#fff;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);}
+.item{background:var(--bg);aspect-ratio:1/1;position:relative;overflow:hidden;cursor:crosshair;}
+.item img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:0.7s cubic-bezier(0.19,1,0.22,1);opacity:0.6;}
+.item:hover img{filter:grayscale(0);opacity:1;transform:scale(1.05);}
+.item-desc{position:absolute;bottom:30px;left:30px;opacity:0;transition:0.4s;transform:translateY(10px);}
+.item:hover .item-desc{opacity:1;transform:translateY(0);}
+.item-desc span{background:#fff;color:#000;padding:5px 12px;font-size:0.7rem;font-weight:800;text-transform:uppercase;}
+@media (max-width:768px){.grid{grid-template-columns:1fr;}h1{font-size:2.5rem;}}
+</style>
+</head>
+<body>
+<a href="un3ii.html" class="back">Back to start</a>
+<header>
+<div>
+<p style="color:#555;font-size:0.8rem;letter-spacing:3px;margin-bottom:10px;">GALLERY</p>
+<h1>VISUALS</h1>
+</div>
+</header>
+<div class="grid">
+<div class="item">
+<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+1">
+<div class="item-desc"><span>Cover Art</span></div>
+</div>
+<div class="item">
+<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+2">
+<div class="item-desc"><span>Branding</span></div>
+</div>
+<div class="item">
+<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+3">
+<div class="item-desc"><span>UI Design</span></div>
+</div>
+<div class="item">
+<img src="https://via.placeholder.com/800/0a0a0a/fff?text=GRAPHIC+4">
+<div class="item-desc"><span>NexCode Asset</span></div>
+</div>
+</div>
+</body>
+</html>
