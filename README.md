@@ -31,11 +31,11 @@ I focus on building **real usable services** instead of experimental projects.
 
 ---
 
-# 🌍 The IchMgr Ecosystem
+# 🌍 The SOON Ecosystem
 
 Most of my work is part of a large ecosystem called:
 
-## ⚙️ IchMgr
+## ⚙️ SOON
 
 **IchMgr** is the **central core system** that manages and connects all projects created by me.
 
@@ -45,7 +45,7 @@ The ecosystem currently includes multiple connected services.
 
 ---
 
-# 🤖 IchMgrAI
+# 🤖 SOON
 
 **IchMgrAI** is my **Artificial Intelligence platform** designed to power advanced AI systems.
 
@@ -64,7 +64,7 @@ IchMgrAI will support both **public and private AI deployments**.
 
 ---
 
-# 🛒 IchCode
+# 🛒 SOON
 
 **IchCode** is a **digital marketplace platform** for developers and communities.
 
@@ -81,7 +81,7 @@ The goal is to provide **affordable tools and resources for online communities**
 
 ---
 
-# ☁️ IchHost
+# ☁️ SOON
 
 **IchHost** is a **custom hosting service** designed for modern internet projects.
 
@@ -96,7 +96,7 @@ The platform focuses on **performance, simplicity and automation**.
 
 ---
 
-# 💬 IchCommunity
+# 💬 SOON
 
 **IchCommunity** is a communication platform similar to a **messenger system**.
 
@@ -104,7 +104,7 @@ It is designed to integrate directly with other services from the IchMgr ecosyst
 
 ---
 
-# 🖥️ IchCloud
+# 🖥️ SOON
 
 **IchCloud** is a future cloud infrastructure project.
 
@@ -117,7 +117,7 @@ It will provide:
 
 ---
 
-# 🤖 Luxora
+# 🤖 SOON
 
 **Luxora** is a **public Discord bot** with many powerful features and a web dashboard.
 
