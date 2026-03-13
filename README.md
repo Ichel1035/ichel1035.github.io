@@ -37,7 +37,7 @@ Most of my work is part of a large ecosystem called:
 
 ## ⚙️ SOON
 
-**IchMgr** is the **central core system** that manages and connects all projects created by me.
+**SOON** is the **central core system** that manages and connects all projects created by me.
 
 It acts as a **management engine** responsible for infrastructure, services, AI integrations and platform communication.
 
@@ -47,7 +47,7 @@ The ecosystem currently includes multiple connected services.
 
 # 🤖 SOON
 
-**IchMgrAI** is my **Artificial Intelligence platform** designed to power advanced AI systems.
+**SOON** is my **Artificial Intelligence platform** designed to power advanced AI systems.
 
 Goal of the project:
 
@@ -66,7 +66,7 @@ IchMgrAI will support both **public and private AI deployments**.
 
 # 🛒 SOON
 
-**IchCode** is a **digital marketplace platform** for developers and communities.
+**SOON** is a **digital marketplace platform** for developers and communities.
 
 Products that can be sold there include:
 
@@ -83,7 +83,7 @@ The goal is to provide **affordable tools and resources for online communities**
 
 # ☁️ SOON
 
-**IchHost** is a **custom hosting service** designed for modern internet projects.
+**SOON** is a **custom hosting service** designed for modern internet projects.
 
 Main services planned:
 
@@ -98,7 +98,7 @@ The platform focuses on **performance, simplicity and automation**.
 
 # 💬 SOON
 
-**IchCommunity** is a communication platform similar to a **messenger system**.
+**SOON** is a communication platform similar to a **messenger system**.
 
 It is designed to integrate directly with other services from the IchMgr ecosystem and allow communities to communicate and manage projects in one place.
 
@@ -106,7 +106,7 @@ It is designed to integrate directly with other services from the IchMgr ecosyst
 
 # 🖥️ SOON
 
-**IchCloud** is a future cloud infrastructure project.
+**SOON** is a future cloud infrastructure project.
 
 It will provide:
 
@@ -119,7 +119,7 @@ It will provide:
 
 # 🤖 SOON
 
-**Luxora** is a **public Discord bot** with many powerful features and a web dashboard.
+**SOON** is a **public Discord bot** with many powerful features and a web dashboard.
 
 Key features include:
 
