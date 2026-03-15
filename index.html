@@ -1,20 +1,3 @@
-<!---
-       /$$$$$$           /$$                 /$$   /$$    /$$$$$$   /$$$$$$  /$$$$$$$ 
-      |_  $$_/          | $$                | $$ /$$$$   /$$$_  $$ /$$__  $$| $$____/ 
-        | $$    /$$$$$$$| $$$$$$$   /$$$$$$ | $$|_  $$  | $$$$\ $$|__/  \ $$| $$      
-        | $$   /$$_____/| $$__  $$ /$$__  $$| $$  | $$  | $$ $$ $$   /$$$$$/| $$$$$$$ 
-        | $$  | $$      | $$  \ $$| $$$$$$$$| $$  | $$  | $$\ $$$$  |___  $$|_____  $$
-        | $$  | $$      | $$  | $$| $$_____/| $$  | $$  | $$ \ $$$ /$$  \ $$ /$$  \ $$
-       /$$$$$$|  $$$$$$$| $$  | $$|  $$$$$$$| $$ /$$$$$$|  $$$$$$/|  $$$$$$/|  $$$$$$/
-      |______/ \_______/|__/  |__/ \_______/|__/|______/ \______/  \______/  \______/ 
-                                                                                
-STRONA STWORZONA PRZEZ ICHEL1035 DO UŻYTKU WŁASNEGO
-
-Na podstawie art. 17 ustawy o prawie autorskim i prawach pokrewnych wszelkie prawa do niniejszego kodu należą do autora. 
-Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez mojej wyraźnej zgody.    
---->
-
-
 <!DOCTYPE html>
 <html lang="pl" class="scroll-smooth">
 <head>
@@ -149,16 +132,51 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
             font-size: 0.8rem;
             position: relative;
         }
-        .day-busy::after {
-            content: '';
+
+        /* --- MODYFIKACJA KROPEK --- */
+        .status-dot {
             position: absolute;
-            bottom: 4px;
-            width: 5px;
-            height: 5px;
-            background: #ff5f56;
+            bottom: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            box-shadow: 0 0 5px #ff5f56;
+            cursor: help;
+            transition: transform 0.2s ease;
+            z-index: 20;
         }
+        .status-dot:hover {
+            transform: scale(1.5);
+        }
+        .dot-busy { background: #ff5f56; box-shadow: 0 0 10px #ff5f56; }
+        .dot-limited { background: #ffbd2e; box-shadow: 0 0 10px #ffbd2e; }
+
+        /* Tooltip Style */
+        .day-tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 160px;
+            font-size: 10px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .calendar-day:hover .day-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* --- KONIEC MODYFIKACJI --- */
+
         .btn-loading { opacity: 0.7; pointer-events: none; }
         .btn-success { background: #27c93f !important; }
         .btn-error { background: #ff5f56 !important; }
@@ -351,6 +369,10 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
                                 <span data-t="sch_l1">Termin zajęty / System Busy</span>
                             </div>
                             <div class="flex items-center gap-3 text-xs">
+                                <span class="dot-yellow w-3 h-3 rounded-full"></span>
+                                <span data-t="sch_l3">Ograniczona dostępność / Limited</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs">
                                 <span class="bg-white/10 w-3 h-3 rounded-full border border-white/20"></span>
                                 <span data-t="sch_l2">Wolne terminy / Available</span>
                             </div>
@@ -513,7 +535,7 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
                 work_title: "Wybrane <span class='text-[#00ff9d]'>Prace</span>", work_subtitle: "Inżynieria systemowa na najwyższym poziomie",
                 sch_title: "Centrum <span class='text-[#00ff9d]'>Dostępności</span>", sch_subtitle: "Godziny procesowania i statusy",
                 sch_hours_t: "Godziny Pracy", sch_week: "Poniedziałek - Piątek", sch_weekend: "Sobota - Niedziela",
-                sch_legend: "Legenda", sch_l1: "Termin zajęty", sch_l2: "Wolny termin",
+                sch_legend: "Legenda", sch_l1: "Termin zajęty", sch_l2: "Wolny termin", sch_l3: "Ograniczona dostępność",
                 p1_cat: "Boty Discord",
                 con_title: "Masz <span class='text-[#00ff9d]'>Wizję?</span>",
                 con_desc: "Masz projekt, który wymaga solidnej architektury? Napisz do mnie.",
@@ -523,7 +545,8 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
                 form_sending: "Wysyłanie...",
                 form_success: "✅ Wiadomość wysłana! Odezwę się wkrótce.",
                 form_error: "❌ Błąd wysyłania. Spróbuj ponownie.",
-                form_fill: "⚠️ Wypełnij wszystkie pola."
+                form_fill: "⚠️ Wypełnij wszystkie pola.",
+                tip_client: "Klient", tip_service: "Usługa", tip_status: "Status", tip_limited: "Mogę rzadziej odpisywać. System przeciążony."
             },
             en: {
                 nav_home: "Base", nav_skills: "Skills", nav_work: "Work", nav_schedule: "Schedule", nav_connect: "Connect", nav_btn: "Let's Talk",
@@ -539,7 +562,7 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
                 work_title: "Selected <span class='text-[#00ff9d]'>Works</span>", work_subtitle: "System engineering at the highest level",
                 sch_title: "Availability <span class='text-[#00ff9d]'>Hub</span>", sch_subtitle: "Workflow and processing hours",
                 sch_hours_t: "Working Hours", sch_week: "Monday - Friday", sch_weekend: "Saturday - Sunday",
-                sch_legend: "Legend", sch_l1: "System Busy", sch_l2: "Available",
+                sch_legend: "Legend", sch_l1: "System Busy", sch_l2: "Available", sch_l3: "Limited Availability",
                 p1_cat: "Discord Bots",
                 con_title: "Got a <span class='text-[#00ff9d]'>Vision?</span>",
                 con_desc: "Got a project that needs solid architecture? Write to me.",
@@ -549,7 +572,8 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
                 form_sending: "Sending...",
                 form_success: "✅ Message sent! I'll get back to you soon.",
                 form_error: "❌ Send error. Please try again.",
-                form_fill: "⚠️ Please fill in all fields."
+                form_fill: "⚠️ Please fill in all fields.",
+                tip_client: "Client", tip_service: "Service", tip_status: "Status", tip_limited: "I might respond slower. System limited."
             }
         };
         let currentLang = 'pl';
@@ -579,7 +603,26 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
                 nav.classList.remove('py-4', 'border-b', 'border-white/5');
             }
         });
+
+        // --- DANE KALENDARZA ---
         const busyDays = [7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25];
+        const limitedDays = [5, 12, 19, 26]; // Nowe żółte dni
+
+        const dayDetails = {
+            7:  { client: "XenonDev", service: "Discord Bot" },
+            8:  { client: "MegaHost", service: "API Security" },
+            15: { client: "Private", service: "Web App" },
+            16: { client: "IchMgr", service: "Database Sync" },
+            17: { client: "DevTeam", service: "Flask Backend" },
+            18: { client: "GamerHub", service: "Discord Integration" },
+            20: { client: "SkyCloud", service: "Infrastructure" },
+            21: { client: "Zenon", service: "Website" },
+            22: { client: "CryptoS", service: "Bot Automation" },
+            23: { client: "Nexus", service: "Maintenance" },
+            24: { client: "ProDesign", service: "Web App" },
+            25: { client: "User102", service: "Custom Script" }
+        };
+
         function renderCalendar() {
             const container = document.getElementById('calendar-days');
             const monthLabel = document.getElementById('calendar-month');
@@ -588,25 +631,59 @@ Zabrania się kopiowania, udostępniania i przekazywania kodu osobom trzecim bez
             const month = now.getMonth();
             const monthNamesPL = ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"];
             const monthNamesEN = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            
             monthLabel.innerText = `${currentLang === 'pl' ? monthNamesPL[month] : monthNamesEN[month]} ${year}`;
+            
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             container.innerHTML = '';
+            
             let startOffset = firstDay === 0 ? 6 : firstDay - 1;
             for(let i = 0; i < startOffset; i++) {
                 container.innerHTML += `<div class="calendar-day opacity-0"></div>`;
             }
+
+            const t = translations[currentLang];
+
             for(let day = 1; day <= daysInMonth; day++) {
                 const isBusy = busyDays.includes(day);
+                const isLimited = limitedDays.includes(day);
                 const dateObj = new Date(year, month, day);
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
+                
+                let dotHtml = '';
+                let tooltipHtml = '';
+
+                if (isBusy) {
+                    const info = dayDetails[day] || { client: "???", service: "???" };
+                    dotHtml = `<span class="status-dot dot-busy"></span>`;
+                    tooltipHtml = `
+                        <div class="day-tooltip">
+                            <p class="text-[#ff5f56] font-black uppercase mb-1">BUSY</p>
+                            <p class="border-t border-white/10 pt-1"><b>${t.tip_client}:</b> ${info.client}</p>
+                            <p><b>${t.tip_service}:</b> ${info.service}</p>
+                        </div>
+                    `;
+                } else if (isLimited) {
+                    dotHtml = `<span class="status-dot dot-yellow"></span>`;
+                    tooltipHtml = `
+                        <div class="day-tooltip">
+                            <p class="text-[#ffbd2e] font-black uppercase mb-1">LIMITED</p>
+                            <p class="border-t border-white/10 pt-1">${t.tip_limited}</p>
+                        </div>
+                    `;
+                }
+
                 container.innerHTML += `
-                    <div class="calendar-day bg-white/5 border border-white/5 ${isBusy ? 'day-busy' : ''} ${isWeekend ? 'text-[#00ff9d]' : ''}">
+                    <div class="calendar-day bg-white/5 border border-white/5 ${isWeekend ? 'text-[#00ff9d]' : ''} group">
                         ${day}
+                        ${dotHtml}
+                        ${tooltipHtml}
                     </div>
                 `;
             }
         }
+
         const WORKER_URL = 'https://tight-art-7986.ichel-kontakt.workers.dev/';
         async function handleFormSubmit() {
             const name    = document.getElementById('form-name').value.trim();
