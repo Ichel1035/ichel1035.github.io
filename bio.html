@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio | IchMgr.pl Style</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #111111;
+            --accent: #7c4dff; /* Fioletowy akcent */
+            --text-main: #ffffff;
+            --text-dim: #999999;
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Efekt lekkiego blasku w tle */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(124, 77, 255, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* Avatar i Nagłówek */
+        .profile-header {
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            padding: 5px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(124, 77, 255, 0.2);
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .bio-text {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Linki / Przyciski */
+        .links-gap {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            background: #161616;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .link-item i {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .link-item span {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .fa-chevron-right {
+            font-size: 0.8rem !important;
+            opacity: 0.3;
+        }
+
+        /* Stopka - Powered by IchMgr.pl */
+        footer {
+            margin-top: 50px;
+            padding-bottom: 30px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        footer:hover {
+            opacity: 1;
+        }
+
+        .powered-link {
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .logo-box {
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        /* Animacje */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="profile-header">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+            <h1>ichel1035</h1>
+            <p class="bio-text">Twórca rozwiązań AI, botów Discord oraz aplikacji webowych. Buduję przyszłość hostingu w Polsce.</p>
+        </header>
+
+        <div class="links-gap">
+            <a href="#" class="link-item">
+                <div class="link-content">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord Server</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+
+            <a href="#" class="link-item">
+                <div class="link-content">
+                    <i class="fas fa-globe"></i>
+                    <span>Moje Projekty</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+
+            <a href="#" class="link-item">
+                <div class="link-content">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+
+            <a href="#" class="link-item">
+                <div class="link-content">
+                    <i class="fas fa-envelope"></i>
+                    <span>Kontakt</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+
+        <footer>
+            <a href="https://ichmgr.pl" target="_blank" class="powered-link">
+                <span>powered by</span>
+                <div class="logo-box">IchMgr</div>
+                <span>IchMgr.pl</span>
+            </a>
+        </footer>
+    </div>
+
+</body>
+</html>
