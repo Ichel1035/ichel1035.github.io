@@ -3,215 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ichel1035 | Premium Bio</title>
+    <title>ichel1035 | Bio</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --accent: #a855f7; /* Electric Purple */
-            --accent-glow: rgba(168, 85, 247, 0.4);
-            --glass: rgba(10, 10, 12, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #ffffff;
-            --text-dim: rgba(255, 255, 255, 0.6);
+            --bg: #050505;
+            --accent: #a855f7; /* Guns.lol Purple */
+            --card-bg: rgba(10, 10, 10, 0.6);
+            --border: rgba(168, 85, 247, 0.2);
+            --text: #ffffff;
+            --subtext: #a1a1aa;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: default;
+            cursor: crosshair; /* Stylistyka guns.lol */
         }
 
-        /* --- Dynamiczne Animowane Tło --- */
         body {
-            background: #08080a;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Lexend', sans-serif;
-            color: var(--text-main);
             overflow: hidden;
-            perspective: 1000px;
+            position: relative;
         }
 
-        /* Gradientowe kule w tle (Animowane) */
-        .bg-blobs {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* --- Animowane tło cząsteczek (Particles Effect) --- */
+        #particles-js {
+            position: absolute;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            filter: blur(80px);
-        }
-
-        .blob {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.15;
-            animation: move 20s infinite alternate;
-        }
-
-        .blob-1 { top: -10%; left: -10%; background: #6366f1; }
-        .blob-2 { bottom: -10%; right: -10%; animation-delay: -5s; }
-        .blob-3 { top: 40%; left: 30%; background: #ec4899; width: 300px; height: 300px; animation-delay: -10s; }
-
-        @keyframes move {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(100px, 150px) rotate(90deg); }
+            z-index: 1;
         }
 
         /* --- Główne Okienko (Prostokąt) --- */
-        .glass-panel {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            width: 100%;
-            max-width: 420px;
-            padding: 45px 35px;
-            border-radius: 28px;
-            border: 1px solid var(--glass-border);
+        .profile-card {
             position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            
-            /* Animacja wejścia */
-            animation: panelEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: scale(0.9) translateY(30px);
+            z-index: 10;
+            width: 440px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.1);
+            animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes panelEntrance {
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Neonowy pasek na górze */
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: 20%; right: 20%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        /* --- Profil --- */
-        .profile {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .avatar-container {
+        /* --- Avatar --- */
+        .avatar-box {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             margin: 0 auto 20px;
         }
 
         .avatar {
             width: 100%;
             height: 100%;
-            border-radius: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            padding: 4px;
             object-fit: cover;
-            transform: rotate(-3deg);
-            border: 2px solid var(--glass-border);
+            filter: drop-shadow(0 0 10px var(--accent));
             transition: 0.5s;
         }
 
-        .avatar-container:hover .avatar {
-            transform: rotate(0deg) scale(1.05);
-            border-color: var(--accent);
+        .avatar-box:hover .avatar {
+            transform: rotate(360deg);
         }
 
+        /* --- Tekst --- */
         h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             letter-spacing: -1px;
             margin-bottom: 5px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
         }
 
-        .role {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        .typing-text {
+            font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
             display: block;
+            border-right: 2px solid var(--accent);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(30) infinite, blink 0.5s infinite;
         }
 
-        /* --- Linki --- */
-        .links {
-            display: flex;
-            flex-direction: column;
+        @keyframes typing {
+            0%, 100% { width: 0 }
+            50%, 80% { width: 100% }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+
+        /* --- Przyciski / Linki --- */
+        .socials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
 
-        .btn {
+        .social-btn {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            padding: 16px 20px;
-            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
             text-decoration: none;
-            color: var(--text-main);
+            color: var(--text);
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn i {
-            width: 20px;
-            color: var(--accent);
-            font-size: 1.2rem;
+            justify-content: center;
+            gap: 8px;
             transition: 0.3s;
         }
 
-        .btn:hover {
-            background: rgba(168, 85, 247, 0.1);
+        .social-btn:hover {
+            background: rgba(168, 85, 247, 0.15);
             border-color: var(--accent);
-            transform: translateX(5px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
         }
 
-        .btn:hover i {
-            transform: scale(1.2);
-            text-shadow: 0 0 10px var(--accent);
-        }
-
-        /* Efekt strzałki przy hover */
-        .btn::after {
-            content: '\f061';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 20px;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: 0.3s;
-            font-size: 0.8rem;
+        .social-btn i {
             color: var(--accent);
         }
 
-        .btn:hover::after {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* --- Footer (Na samym dole) --- */
-        .footer-fixed {
-            position: fixed;
+        /* --- Stopka --- */
+        .footer {
+            position: absolute;
             bottom: 30px;
-            left: 0;
             width: 100%;
             text-align: center;
             z-index: 10;
@@ -219,500 +164,121 @@
 
         .powered-by {
             text-decoration: none;
-            color: var(--text-dim);
+            color: var(--subtext);
             font-size: 0.8rem;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
         }
 
         .powered-by:hover {
+            color: #fff;
             border-color: var(--accent);
-            color: #fff;
-            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent);
         }
 
-        .ichmgr-badge {
-            background: var(--accent);
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 0.7rem;
-            box-shadow: 0 0 10px var(--accent-glow);
+        .logo-txt {
+            font-weight: 700;
+            color: var(--accent);
         }
 
-        /* Responsywność */
-        @media (max-width: 450px) {
-            .glass-panel {
-                width: 90%;
-                padding: 30px 20px;
-            }
-            h1 { font-size: 1.8rem; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="bg-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
+    <canvas id="particles-js"></canvas>
 
-    <div class="glass-panel">
-        <header class="profile">
-            <div class="avatar-container">
-                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=ichel" alt="A" class="avatar">
-            </div>
-            <span class="role">Developer & Creator</span>
-            <h1>ichel1035</h1>
-        </header>
+    <div class="profile-card">
+        <div class="avatar-box">
+            <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=ichel" alt="Avatar" class="avatar">
+        </div>
 
-        <div class="links">
-            <a href="#" class="btn" target="_blank">
-                <i class="fab fa-discord"></i>
-                <span>Discord Server</span>
+        <h1>ichel1035</h1>
+        <span class="typing-text">Fullstack Dev | Discord Bot Specialist</span>
+
+        <div class="socials">
+            <a href="#" class="social-btn">
+                <i class="fab fa-discord"></i> Discord
             </a>
-            <a href="#" class="btn" target="_blank">
-                <i class="fas fa-terminal"></i>
-                <span>Moje Projekty</span>
+            <a href="#" class="social-btn">
+                <i class="fab fa-github"></i> GitHub
             </a>
-            <a href="#" class="btn" target="_blank">
-                <i class="fab fa-github"></i>
-                <span>GitHub Repo</span>
+            <a href="#" class="social-btn">
+                <i class="fas fa-code"></i> Projects
             </a>
-            <a href="https://ichmgr.pl" class="btn" target="_blank">
-                <i class="fas fa-server"></i>
-                <span>IchMgr Hosting</span>
+            <a href="https://ichmgr.pl" class="social-btn">
+                <i class="fas fa-server"></i> IchMgr
             </a>
         </div>
     </div>
 
-    <div class="footer-fixed">
+    <footer class="footer">
         <a href="https://ichmgr.pl" class="powered-by">
             <span>powered by</span>
-            <span class="ichmgr-badge">IchMgr.pl</span>
-        </a>
-    </div>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio Panel | Premium Dark Mode</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* --- Zmienne i Reset --- */
-        :root {
-            /* Nowa, głębsza paleta */
-            --bg-deep: #030304; /* Prawie czarny */
-            --window-bg: rgba(13, 13, 17, 0.7); /* Półprzezroczyste tło okna */
-            --card-bg: rgba(255, 255, 255, 0.03); /* Bardzo subtelne tło kart */
-            --card-hover: rgba(124, 77, 255, 0.08); /* Fioletowy poblask przy hover */
-            
-            --accent: #8c61ff; /* Jasny, neonowy fiolet */
-            --accent-glow: rgba(140, 97, 255, 0.5);
-            
-            --text-main: #ffffff;
-            --text-muted: #888891;
-            
-            --border: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.08);
-
-            --font-main: 'Poppins', sans-serif;
-            --font-heading: 'Space Grotesk', sans-serif;
-            
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        /* --- Styl Body i Tła --- */
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Centrowanie okna pionowo */
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Animowane gradienty w tle */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: var(--accent);
-            filter: blur(150px);
-            opacity: 0.15;
-            z-index: -1;
-            animation: pulseGlow 10s infinite alternate;
-        }
-
-        body::before { top: -50px; left: -50px; }
-        body::after { bottom: -50px; right: -50px; animation-delay: 5s; }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.15; }
-            100% { transform: scale(1.3); opacity: 0.1; }
-        }
-
-        /* --- Główne Okno (szklany efekt) --- */
-        .bio-window {
-            background: var(--window-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            width: 100%;
-            max-width: 480px;
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
-                        inset 0 0 0 1px rgba(255,255,255,0.05);
-            
-            /* Animacja wejścia okna */
-            animation: windowAppear 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-            
-            /* Aby stopka była na dole ekranu, okno ma margin-bottom */
-            margin-bottom: 100px; 
-        }
-
-        @keyframes windowAppear {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Nagłówek Profilu --- */
-        .profile-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--glass-border);
-            padding: 4px;
-            background: var(--bg-deep);
-            transition: var(--transition);
-        }
-
-        /* Neonowy ring wokół awatara */
-        .avatar-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            opacity: 0.5;
-            filter: blur(5px);
-            transform: scale(0.9);
-            transition: var(--transition);
-        }
-
-        .avatar-wrapper:hover::after {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(8px);
-        }
-        
-        .avatar-wrapper:hover .avatar {
-            border-color: var(--accent);
-            transform: scale(1.02);
-        }
-
-        h1 {
-            font-family: var(--font-heading);
-            font-size: 2.6rem;
-            font-weight: 700;
-            letter-spacing: -1.5px;
-            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(140, 97, 255, 0.1);
-            border: 1px solid rgba(140, 97, 255, 0.2);
-            color: var(--accent);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent);
-            animation: pulseDot 2s infinite;
-        }
-
-        @keyframes pulseDot {
-            0% { box-shadow: 0 0 0 0 rgba(140, 97, 255, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(140, 97, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(140, 97, 255, 0); }
-        }
-
-        .bio-text {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            max-width: 90%;
-            margin: 0 auto;
-        }
-
-        /* --- Lista Linków --- */
-        .links-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .link-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 18px 22px;
-            text-decoration: none;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            
-            /* Opóźnienie animacji pojawiania się dla każdego linku */
-            opacity: 0;
-            transform: translateY(10px);
-            animation: linkAppear 0.5s ease-out forwards;
-        }
-
-        @keyframes linkAppear {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hover efekty dla linków */
-        .link-item:hover {
-            background: var(--card-hover);
-            border-color: rgba(140, 97, 255, 0.3);
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 
-                        0 0 15px rgba(124, 77, 255, 0.1);
-        }
-
-        /* "Połysk" przy najechaniu */
-        .link-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
-        }
-
-        .link-item:hover::before {
-            left: 100%;
-        }
-
-        /* Styl Ikon (SVG Lucide) */
-        .link-icon {
-            width: 24px;
-            height: 24px;
-            color: var(--text-muted);
-            transition: var(--transition);
-            flex-shrink: 0;
-        }
-
-        .link-item:hover .link-icon {
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-
-        .link-title {
-            font-weight: 600;
-            font-size: 1.05rem;
-            flex-grow: 1;
-        }
-
-        .chevron-icon {
-            width: 18px;
-            height: 18px;
-            color: var(--border);
-            transition: var(--transition);
-        }
-
-        .link-item:hover .chevron-icon {
-            color: var(--accent);
-            transform: translateX(3px);
-        }
-
-        /* --- Stopka (Całkiem na dole) --- */
-        .main-footer {
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            padding: 25px 0;
-            border-top: 1px solid var(--border);
-            background: rgba(3, 3, 4, 0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .powered-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            opacity: 0.7;
-        }
-
-        .powered-link:hover {
-            opacity: 1;
-            color: var(--text-main);
-        }
-
-        .ichmgr-logo {
-            background: var(--accent);
-            color: #fff;
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 0.8rem;
-            padding: 5px 10px;
-            border-radius: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 15px var(--accent-glow);
-            transition: var(--transition);
-        }
-
-        .powered-link:hover .ichmgr-logo {
-            box-shadow: 0 0 25px var(--accent);
-            transform: scale(1.05);
-        }
-
-        /* Responsywność dla małych ekranów */
-        @media (max-width: 500px) {
-            .bio-window {
-                padding: 30px 20px;
-                border-radius: 0; /* Full screen width on mobile */
-                border-left: none;
-                border-right: none;
-                margin-bottom: 120px; /* Więcej miejsca na stopkę */
-            }
-            
-            h1 { font-size: 2.1rem; }
-            .bio-text { font-size: 0.9rem; max-width: 100%; }
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="bio-window">
-        
-        <header class="profile-header">
-            <div class="avatar-wrapper">
-                <img src="https://api.dicebear.com/8.x/notionists-neutral/svg?seed=ichel" alt="Avatar" class="avatar">
-            </div>
-            
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                Online & Wyróżniony
-            </div>
-            
-            <h1>ichel1035</h1>
-            <p class="bio-text">Automatyzacja AI • Full-Stack Dev • Systemy Skalowalne. Buduję zaawansowane rozwiązania dla IchMgr.pl.</p>
-        </header>
-
-        <div class="links-list">
-            
-            <a href="#" class="link-item" style="animation-delay: 0.1s;">
-                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                <span class="link-title">Oficjalny Discord</span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-
-            <a href="#" class="link-item" style="animation-delay: 0.2s;">
-                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
-                <span class="link-title">Portfolio Projektów</span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-
-            <a href="#" class="link-item" style="animation-delay: 0.3s;">
-                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                <span class="link-title">Repozytoria GitHub</span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-
-            <a href="#" class="link-item" style="animation-delay: 0.4s;">
-                <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.89 14.89 4H10.5L20 9.11 9.11 20H13.5z"/></svg>
-                <span class="link-title">Usługi Premium</span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-
-        </div>
-    </div>
-
-    <footer class="main-footer">
-        <a href="https://ichmgr.pl" target="_blank" class="powered-link">
-            <span>powered by</span>
-            <span class="ichmgr-logo">IchMgr</span>
-            <span>IchMgr.pl</span>
+            <span class="logo-txt">IchMgr.pl</span>
         </a>
     </footer>
+
+    <script>
+        const canvas = document.getElementById('particles-js');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 80; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 
 </body>
 </html>
