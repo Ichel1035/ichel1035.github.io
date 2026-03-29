@@ -5,280 +5,214 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ichel1035 | Bio</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --bg: #050505;
-            --accent: #a855f7; /* Guns.lol Purple */
-            --card-bg: rgba(10, 10, 10, 0.6);
-            --border: rgba(168, 85, 247, 0.2);
+            --bg: #030303;
+            --accent: #a855f7; 
+            --glass: rgba(15, 15, 15, 0.7);
+            --border: rgba(255, 255, 255, 0.08);
             --text: #ffffff;
-            --subtext: #a1a1aa;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: crosshair; /* Stylistyka guns.lol */
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Space Grotesk', sans-serif;
-            height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* --- Animowane tło cząsteczek (Particles Effect) --- */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+        /* --- Animowany Gradient w tle --- */
+        .bg-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, transparent 60%);
+            z-index: -1;
         }
 
-        /* --- Główne Okienko (Prostokąt) --- */
-        .profile-card {
-            position: relative;
-            z-index: 10;
-            width: 440px;
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
+        /* --- Główne Okno (Prostokąt) --- */
+        .container {
+            width: 90%; /* Szerokość relatywna - nie wyjdzie poza ekran */
+            max-width: 450px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 24px;
+            padding: 40px 30px;
             text-align: center;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.1);
-            animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s ease-out;
+            margin: 20px auto; /* Centrowanie na wypadek długiego contentu */
         }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Avatar --- */
-        .avatar-box {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 20px;
-        }
-
+        /* --- Profil --- */
         .avatar {
-            width: 100%;
-            height: 100%;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 2px solid var(--accent);
             padding: 4px;
-            object-fit: cover;
-            filter: drop-shadow(0 0 10px var(--accent));
-            transition: 0.5s;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
         }
 
-        .avatar-box:hover .avatar {
-            transform: rotate(360deg);
+        .avatar:hover {
+            transform: scale(1.05) rotate(5deg);
         }
 
-        /* --- Tekst --- */
         h1 {
             font-size: 2.2rem;
+            font-weight: 700;
             letter-spacing: -1px;
             margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
         }
 
-        .typing-text {
+        .typing {
             font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
             font-size: 0.9rem;
             margin-bottom: 30px;
-            display: block;
-            border-right: 2px solid var(--accent);
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 3s steps(30) infinite, blink 0.5s infinite;
+            opacity: 0.8;
         }
 
-        @keyframes typing {
-            0%, 100% { width: 0 }
-            50%, 80% { width: 100% }
-        }
-
-        @keyframes blink {
-            50% { border-color: transparent }
-        }
-
-        /* --- Przyciski / Linki --- */
-        .socials {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        /* --- Linki --- */
+        .links-grid {
+            display: flex;
+            flex-direction: column;
             gap: 12px;
         }
 
-        .social-btn {
+        .item {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 14px;
             text-decoration: none;
             color: var(--text);
-            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            justify-content: space-between;
             transition: 0.3s;
         }
 
-        .social-btn:hover {
-            background: rgba(168, 85, 247, 0.15);
+        .item:hover {
+            background: rgba(168, 85, 247, 0.1);
             border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
+            transform: translateY(-2px);
         }
 
-        .social-btn i {
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item i {
+            font-size: 1.2rem;
             color: var(--accent);
         }
 
-        /* --- Stopka --- */
+        .fa-chevron-right {
+            font-size: 0.8rem !important;
+            opacity: 0.3;
+        }
+
+        /* --- Stopka na samym dole --- */
         .footer {
-            position: absolute;
-            bottom: 30px;
+            margin-top: auto;
+            padding: 30px 0;
             width: 100%;
             text-align: center;
-            z-index: 10;
         }
 
-        .powered-by {
+        .powered {
             text-decoration: none;
-            color: var(--subtext);
-            font-size: 0.8rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 50px;
-            border: 1px solid var(--border);
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
             transition: 0.3s;
         }
 
-        .powered-by:hover {
-            color: #fff;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        .logo-txt {
-            font-weight: 700;
+        .powered span {
             color: var(--accent);
+            font-weight: 700;
         }
 
+        .powered:hover {
+            color: #fff;
+        }
+
+        /* Fix dla bardzo małych telefonów */
+        @media (max-width: 380px) {
+            .container { padding: 30px 15px; }
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="particles-js"></canvas>
+    <div class="bg-glow"></div>
 
-    <div class="profile-card">
-        <div class="avatar-box">
-            <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=ichel" alt="Avatar" class="avatar">
-        </div>
-
+    <div class="container">
+        <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=ichel" alt="Avatar" class="avatar">
         <h1>ichel1035</h1>
-        <span class="typing-text">Fullstack Dev | Discord Bot Specialist</span>
+        <p class="typing">Fullstack Dev | IchMgr.pl</p>
 
-        <div class="socials">
-            <a href="#" class="social-btn">
-                <i class="fab fa-discord"></i> Discord
+        <div class="links-grid">
+            <a href="#" class="item">
+                <div class="item-info">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
             </a>
-            <a href="#" class="social-btn">
-                <i class="fab fa-github"></i> GitHub
+
+            <a href="#" class="item">
+                <div class="item-info">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
             </a>
-            <a href="#" class="social-btn">
-                <i class="fas fa-code"></i> Projects
-            </a>
-            <a href="https://ichmgr.pl" class="social-btn">
-                <i class="fas fa-server"></i> IchMgr
+
+            <a href="https://ichmgr.pl" class="item">
+                <div class="item-info">
+                    <i class="fas fa-server"></i>
+                    <span>IchMgr.pl</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
             </a>
         </div>
     </div>
 
     <footer class="footer">
-        <a href="https://ichmgr.pl" class="powered-by">
-            <span>powered by</span>
-            <span class="logo-txt">IchMgr.pl</span>
+        <a href="https://ichmgr.pl" class="powered">
+            powered by <span>IchMgr.pl</span>
         </a>
     </footer>
-
-    <script>
-        const canvas = document.getElementById('particles-js');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(168, 85, 247, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function init() {
-            for (let i = 0; i < 80; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animate);
-        }
-
-        init();
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
 
 </body>
 </html>
