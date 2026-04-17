@@ -117,61 +117,62 @@
         }
         .settings-btn:hover { background: var(--primary); color: black; }
 
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            font-size: 0.8rem;
+        /* Google Calendar iframe wrapper */
+        .gcal-wrapper {
             position: relative;
+            width: 100%;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 157, 0.15);
+            box-shadow: 0 0 60px rgba(0, 255, 157, 0.05);
         }
 
-        .status-dot {
-            position: absolute;
-            bottom: 6px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            cursor: help;
-            transition: transform 0.2s ease;
-            z-index: 20;
+        .gcal-wrapper iframe {
+            width: 100%;
+            height: 580px;
+            border: none;
+            display: block;
+            filter: invert(1) hue-rotate(140deg) saturate(0.8) brightness(0.85);
+            transition: filter 0.4s;
         }
-        .status-dot:hover {
-            transform: scale(1.5);
-        }
-        .dot-busy { background: #ff5f56; box-shadow: 0 0 10px #ff5f56; }
-        .dot-limited { background: #ffbd2e; box-shadow: 0 0 10px #ffbd2e; }
 
-        .day-tooltip {
-            visibility: hidden;
-            position: absolute;
-            bottom: 130%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.95);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            width: 160px;
-            font-size: 10px;
-            text-align: center;
-            border: 1px solid var(--primary);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
+        .light-mode .gcal-wrapper iframe {
+            filter: none;
         }
-        .calendar-day:hover .day-tooltip {
-            visibility: visible;
-            opacity: 1;
+
+        .gcal-topbar {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+        }
+
+        .light-mode .gcal-topbar {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .gcal-badge {
+            margin-left: auto;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            padding: 3px 10px;
+            border-radius: 99px;
+        }
+
+        .gcal-title-text {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text);
+            opacity: 0.7;
         }
 
         .btn-loading { opacity: 0.7; pointer-events: none; }
@@ -334,6 +335,8 @@
             </div>            
         </div>
     </section>
+
+    <!-- SCHEDULE SECTION — Google Calendar integration -->
     <section id="schedule" class="py-32 px-8 bg-black/20">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16" data-aos="fade-up">
@@ -341,6 +344,7 @@
                 <p class="text-gray-500 uppercase tracking-[0.3em] text-[10px] font-bold" data-t="sch_subtitle">Current workflow and processing hours</p>
             </div>
             <div class="grid lg:grid-cols-3 gap-8 items-start">
+                <!-- Left panel: hours + legend -->
                 <div class="space-y-4" data-aos="fade-right">
                     <div class="glass-card p-8 rounded-3xl">
                         <div class="flex items-center gap-4 mb-6 text-[#00ff9d]">
@@ -362,35 +366,54 @@
                         <h5 class="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-4" data-t="sch_legend">Legend</h5>
                         <div class="space-y-3">
                             <div class="flex items-center gap-3 text-xs">
-                                <span class="dot-red w-3 h-3 rounded-full"></span>
-                                <span data-t="sch_l1">Termin zajęty / System Busy</span>
+                                <span class="w-3 h-3 rounded-full bg-[#039be5]" style="box-shadow:0 0 8px #039be5"></span>
+                                <span data-t="sch_l_me">Mój kalendarz / My Calendar</span>
                             </div>
                             <div class="flex items-center gap-3 text-xs">
-                                <span class="dot-yellow w-3 h-3 rounded-full"></span>
-                                <span data-t="sch_l3">Ograniczona dostępność / Limited</span>
+                                <span class="w-3 h-3 rounded-full bg-[#7986cb]" style="box-shadow:0 0 8px #7986cb"></span>
+                                <span data-t="sch_l_proj">Projekty / Projects</span>
                             </div>
                             <div class="flex items-center gap-3 text-xs">
-                                <span class="bg-white/10 w-3 h-3 rounded-full border border-white/20"></span>
-                                <span data-t="sch_l2">Wolne terminy / Available</span>
+                                <span class="w-3 h-3 rounded-full bg-[#0b8043]" style="box-shadow:0 0 8px #0b8043"></span>
+                                <span data-t="sch_l_hol">Święta / Holidays</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-3">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-green-400" data-t="sch_live">Live — sync z Google Calendar</span>
                     </div>
                 </div>
-                <div class="lg:col-span-2 glass-card p-8 rounded-[2.5rem]" data-aos="fade-left">
-                    <div class="flex justify-between items-center mb-8">
-                        <h4 class="text-2xl font-black uppercase" id="calendar-month">March 2026</h4>
-                        <div class="flex gap-2">
-                             <div class="text-[10px] font-bold text-[#00ff9d] border border-[#00ff9d]/30 px-4 py-1 rounded-full uppercase">Live Calendar</div>
+
+                <!-- Right panel: Google Calendar iframe -->
+                <div class="lg:col-span-2" data-aos="fade-left">
+                    <div class="gcal-wrapper glass-card">
+                        <div class="gcal-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow ml-1"></span>
+                            <span class="dot dot-green ml-1"></span>
+                            <span class="gcal-title-text ml-4" data-t="gcal_label">Ichel1035 — Live Schedule</span>
+                            <span class="gcal-badge">Live Calendar</span>
                         </div>
+                        <iframe
+                            id="gcal-iframe"
+                            src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FWarsaw&showPrint=0&src=aWNoZWwua29udGFrdEBnbWFpbC5jb20&src=ZW4ucG9saXNoI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=MDUzMTRiZjY2YzZhZjlhZjFlYjNlODkwNGQ0NTAzZGJkZDIwMDJlYTEyZWIwNTdiNGYwOWE0YmQ4NTgzN2M0ZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=cGwucG9saXNoI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043&color=%237986cb&color=%230b8043"
+                            frameborder="0"
+                            scrolling="no"
+                            allowfullscreen>
+                        </iframe>
                     </div>
-                    <div class="calendar-grid mb-2 text-center text-[10px] font-black uppercase text-gray-500 tracking-widest">
-                        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div class="text-[#00ff9d]">Sat</div><div class="text-[#00ff9d]">Sun</div>
-                    </div>
-                    <div class="calendar-grid" id="calendar-days"></div>
+                    <p class="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-4 text-center" data-t="gcal_note">
+                        Kalendarz synchronizuje się automatycznie w czasie rzeczywistym · Auto-syncs in real time
+                    </p>
                 </div>
             </div>
         </div>
     </section>
+
     <section id="contact" class="py-32 px-8">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
             <div data-aos="fade-up">
@@ -434,7 +457,6 @@
                         <textarea rows="4" id="form-message" placeholder="..." class="form-input w-full p-4 rounded-xl"></textarea>
                     </div>
                     <div id="form-feedback" class="hidden text-sm font-bold px-4 py-3 rounded-xl"></div>
-
                     <button id="form-submit" onclick="handleFormSubmit()" class="w-full bg-[#00ff9d] text-black py-5 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:scale-[1.02] transition shadow-lg" data-t="form_btn">
                         Transmit Message
                     </button>
@@ -510,6 +532,7 @@
             interactivity: { events: { onhover: { enable: true, mode: "grab" } } },
             retina_detect: true
         });
+
         const themeBtn = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
         themeBtn.addEventListener('click', () => {
@@ -517,6 +540,7 @@
             const isLight = document.body.classList.contains('light-mode');
             themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
         });
+
         const translations = {
             pl: {
                 nav_home: "Baza", nav_skills: "Umiejętności", nav_work: "Projekty", nav_schedule: "Terminarz", nav_connect: "Kontakt", nav_btn: "Rozmawiajmy",
@@ -532,7 +556,13 @@
                 work_title: "Wybrane <span class='text-[#00ff9d]'>Prace</span>", work_subtitle: "Inżynieria systemowa na najwyższym poziomie",
                 sch_title: "Centrum <span class='text-[#00ff9d]'>Dostępności</span>", sch_subtitle: "Godziny procesowania i statusy",
                 sch_hours_t: "Godziny Pracy", sch_week: "Poniedziałek - Piątek", sch_weekend: "Sobota - Niedziela",
-                sch_legend: "Legenda", sch_l1: "Termin zajęty", sch_l2: "Wolny termin", sch_l3: "Ograniczona dostępność",
+                sch_legend: "Legenda",
+                sch_l_me: "Mój kalendarz",
+                sch_l_proj: "Projekty",
+                sch_l_hol: "Święta",
+                sch_live: "Live — synchronizacja z Google Calendar",
+                gcal_label: "Ichel1035 — Terminarz na żywo",
+                gcal_note: "Kalendarz synchronizuje się automatycznie w czasie rzeczywistym",
                 p1_cat: "Boty Discord",
                 con_title: "Masz <span class='text-[#00ff9d]'>Wizję?</span>",
                 con_desc: "Masz projekt, który wymaga solidnej architektury? Napisz do mnie.",
@@ -542,8 +572,7 @@
                 form_sending: "Wysyłanie...",
                 form_success: "✅ Wiadomość wysłana! Odezwę się wkrótce.",
                 form_error: "❌ Błąd wysyłania. Spróbuj ponownie.",
-                form_fill: "⚠️ Wypełnij wszystkie pola.",
-                tip_client: "Klient", tip_service: "Usługa", tip_status: "Status", tip_limited: "Mogę rzadziej odpisywać. System przeciążony."
+                form_fill: "⚠️ Wypełnij wszystkie pola."
             },
             en: {
                 nav_home: "Base", nav_skills: "Skills", nav_work: "Work", nav_schedule: "Schedule", nav_connect: "Connect", nav_btn: "Let's Talk",
@@ -557,9 +586,15 @@
                 exp2_t: "Web Applications", exp2_d: "Modern, responsive websites with focus on UX/UI.",
                 exp3_t: "Python & Flask", exp3_d: "Scalable backends, REST APIs and dynamic Flask platforms.",
                 work_title: "Selected <span class='text-[#00ff9d]'>Works</span>", work_subtitle: "System engineering at the highest level",
-                sch_title: "Availability <span class='text-[#00ff9d]'>Hub</span>", sch_subtitle: "Workflow and processing hours",
+                sch_title: "Availability <span class='text-[#00ff9d]'>Hub</span>", sch_subtitle: "Current workflow and processing hours",
                 sch_hours_t: "Working Hours", sch_week: "Monday - Friday", sch_weekend: "Saturday - Sunday",
-                sch_legend: "Legend", sch_l1: "System Busy", sch_l2: "Available", sch_l3: "Limited Availability",
+                sch_legend: "Legend",
+                sch_l_me: "My Calendar",
+                sch_l_proj: "Projects",
+                sch_l_hol: "Holidays",
+                sch_live: "Live — synced with Google Calendar",
+                gcal_label: "Ichel1035 — Live Schedule",
+                gcal_note: "Auto-syncs in real time · No refresh needed",
                 p1_cat: "Discord Bots",
                 con_title: "Got a <span class='text-[#00ff9d]'>Vision?</span>",
                 con_desc: "Got a project that needs solid architecture? Write to me.",
@@ -569,13 +604,14 @@
                 form_sending: "Sending...",
                 form_success: "✅ Message sent! I'll get back to you soon.",
                 form_error: "❌ Send error. Please try again.",
-                form_fill: "⚠️ Please fill in all fields.",
-                tip_client: "Client", tip_service: "Service", tip_status: "Status", tip_limited: "I might respond slower. System limited."
+                form_fill: "⚠️ Please fill in all fields."
             }
         };
+
         let currentLang = 'pl';
         const langBtn = document.getElementById('lang-toggle');
         const langText = document.getElementById('lang-text');
+
         function updateLanguage() {
             langText.innerText = currentLang === 'en' ? 'PL' : 'EN';
             document.querySelectorAll('[data-t]').forEach(el => {
@@ -584,12 +620,13 @@
                     el.innerHTML = translations[currentLang][key];
                 }
             });
-            renderCalendar();
         }
+
         langBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'pl' : 'en';
             updateLanguage();
         });
+
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 50) {
@@ -600,81 +637,6 @@
                 nav.classList.remove('py-4', 'border-b', 'border-white/5');
             }
         });
-
-        // --- DANE KALENDARZA ---
-        const busyDays = [15, 16, 17, 18, 19, 20, 25];
-        const limitedDays = [5, 7, 8, 12, 21, 22, 23, 24, 26]; // Nowe żółte dni
-
-        const dayDetails = {
-            15: { client: "tokio.v2_", service: "Minecraft ItemShop" },
-            16: { client: "tokio.v2_", service: "Minecraft ItemShop" },
-            17: { client: "natalcia1142", service: "Discord Bot" },
-            18: { client: "natalcia1142", service: "Discord Bot" },
-            19: { client: "itzz_unri", service: "Hosting Infrastructure" },
-            20: { client: "Ichel1035", service: "Infrastructure" },
-            20: { client: "sdds", service: "Infrastructure" }
-        };
-
-        function renderCalendar() {
-            const container = document.getElementById('calendar-days');
-            const monthLabel = document.getElementById('calendar-month');
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const monthNamesPL = ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"];
-            const monthNamesEN = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-            
-            monthLabel.innerText = `${currentLang === 'pl' ? monthNamesPL[month] : monthNamesEN[month]} ${year}`;
-            
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            container.innerHTML = '';
-            
-            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
-            for(let i = 0; i < startOffset; i++) {
-                container.innerHTML += `<div class="calendar-day opacity-0"></div>`;
-            }
-
-            const t = translations[currentLang];
-
-            for(let day = 1; day <= daysInMonth; day++) {
-                const isBusy = busyDays.includes(day);
-                const isLimited = limitedDays.includes(day);
-                const dateObj = new Date(year, month, day);
-                const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
-                
-                let dotHtml = '';
-                let tooltipHtml = '';
-
-                if (isBusy) {
-                    const info = dayDetails[day] || { client: "???", service: "???" };
-                    dotHtml = `<span class="status-dot dot-busy"></span>`;
-                    tooltipHtml = `
-                        <div class="day-tooltip">
-                            <p class="text-[#ff5f56] font-black uppercase mb-1">BUSY</p>
-                            <p class="border-t border-white/10 pt-1"><b>${t.tip_client}:</b> ${info.client}</p>
-                            <p><b>${t.tip_service}:</b> ${info.service}</p>
-                        </div>
-                    `;
-                } else if (isLimited) {
-                    dotHtml = `<span class="status-dot dot-yellow"></span>`;
-                    tooltipHtml = `
-                        <div class="day-tooltip">
-                            <p class="text-[#ffbd2e] font-black uppercase mb-1">LIMITED</p>
-                            <p class="border-t border-white/10 pt-1">${t.tip_limited}</p>
-                        </div>
-                    `;
-                }
-
-                container.innerHTML += `
-                    <div class="calendar-day bg-white/5 border border-white/5 ${isWeekend ? 'text-[#00ff9d]' : ''} group">
-                        ${day}
-                        ${dotHtml}
-                        ${tooltipHtml}
-                    </div>
-                `;
-            }
-        }
 
         const WORKER_URL = 'https://tight-art-7986.ichel-kontakt.workers.dev/';
         async function handleFormSubmit() {
@@ -721,6 +683,7 @@
                 }, 3000);
             }
         }
+
         function showFeedback(el, msg, type) {
             el.classList.remove('hidden', 'text-green-400', 'text-red-400', 'text-yellow-400', 'bg-green-400/10', 'bg-red-400/10', 'bg-yellow-400/10');
             if (type === 'success') {
@@ -732,8 +695,8 @@
             }
             el.textContent = msg;
         }
+
         updateLanguage();
-        renderCalendar();
     </script>
 </body>
 </html>
