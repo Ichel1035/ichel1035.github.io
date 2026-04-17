@@ -4,17 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICHEL1035 | Digital Infrastructure Architect</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap');
-
-        /* Zmienne i motywy [cite: 3, 5] */
         :root {
             --primary: #00ff9d;
             --primary-dark: #00cc7e;
@@ -43,7 +39,8 @@
             transition: background-color 0.4s, color 0.4s;
         }
 
-        /* Tło cząsteczek [cite: 11] */
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
         #particles-js {
             position: fixed;
             width: 100%;
@@ -55,7 +52,6 @@
             background-size: 60px 60px;
         }
 
-        /* Animacje i komponenty [cite: 13, 16] */
         .hero-avatar {
             animation: floating 6s ease-in-out infinite;
             filter: drop-shadow(0 0 50px rgba(0, 255, 157, 0.15));
@@ -72,471 +68,671 @@
             border: 1px solid rgba(128, 128, 128, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .glass-card:hover {
             border-color: var(--primary);
             background: rgba(0, 255, 157, 0.03);
             transform: translateY(-5px);
         }
 
-        /* Kalendarz [cite: 35, 38] */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .dot-red { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
+        .dot-yellow { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
+        .dot-green { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
 
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
-            font-size: 0.85rem;
-            position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
-
-        .status-dot {
-            position: absolute;
-            bottom: 8px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            z-index: 10;
-        }
-
-        .dot-busy { background: #ff5f56; box-shadow: 0 0 10px #ff5f56; } [cite: 41]
-        .dot-limited { background: #ffbd2e; box-shadow: 0 0 10px #ffbd2e; } [cite: 42]
-
-        .day-tooltip { [cite: 43]
-            visibility: hidden;
-            position: absolute;
-            bottom: 135%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #000;
-            color: #fff;
-            padding: 12px;
-            border-radius: 12px;
-            width: 180px;
-            font-size: 11px;
-            border: 1px solid var(--primary);
-            z-index: 100;
-            opacity: 0;
-            transition: 0.3s;
-            pointer-events: none;
-        }
-
-        .calendar-day:hover .day-tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* Formularz [cite: 23, 52] */
         .form-input {
             background: var(--card-bg);
             border: 1px solid rgba(128, 128, 128, 0.2);
             color: var(--text);
             transition: 0.3s;
         }
+        .form-input:focus {
+            border-color: var(--primary);
+            background: rgba(0, 255, 157, 0.05);
+            outline: none;
+        }
 
-        .spin { animation: spin 1s linear infinite; display: inline-block; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .clamp-title { font-size: clamp(2.5rem, 6vw, 5rem); }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        .settings-panel { [cite: 30]
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
-            display: flex; gap: 0.5rem; background: var(--card-bg);
-            padding: 0.6rem; border-radius: 99px; border: 1px solid var(--primary);
+        .settings-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 0.5rem;
+            background: var(--card-bg);
+            padding: 0.5rem;
+            border-radius: 99px;
+            border: 1px solid var(--primary);
             backdrop-filter: blur(10px);
         }
-        
         .settings-btn {
-            width: 44px; height: 44px; border-radius: 50%;
+            width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s;
+            cursor: pointer; transition: 0.3s; font-weight: bold; font-size: 0.8rem;
+        }
+        .settings-btn:hover { background: var(--primary); color: black; }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            position: relative;
         }
 
-        .clamp-title { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; } [cite: 26]
+        .status-dot {
+            position: absolute;
+            bottom: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            cursor: help;
+            transition: transform 0.2s ease;
+            z-index: 20;
+        }
+        .status-dot:hover {
+            transform: scale(1.5);
+        }
+        .dot-busy { background: #ff5f56; box-shadow: 0 0 10px #ff5f56; }
+        .dot-limited { background: #ffbd2e; box-shadow: 0 0 10px #ffbd2e; }
+
+        .day-tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 160px;
+            font-size: 10px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .calendar-day:hover .day-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .btn-loading { opacity: 0.7; pointer-events: none; }
+        .btn-success { background: #27c93f !important; }
+        .btn-error { background: #ff5f56 !important; }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin { animation: spin 0.8s linear infinite; display: inline-block; }
     </style>
 </head>
 <body>
-
     <div id="particles-js"></div>
-
     <div class="settings-panel">
-        <div class="settings-btn" id="theme-toggle">
+        <div class="settings-btn" id="theme-toggle" title="Przełącz tryb">
             <i class="fas fa-moon" id="theme-icon"></i>
         </div>
         <div class="w-[1px] h-10 bg-white/10 mx-1"></div>
-        <div class="settings-btn" id="lang-toggle">
-            <span id="lang-text" class="font-black text-[10px]">PL</span>
+        <div class="settings-btn" id="lang-toggle" title="Switch Language">
+            <span id="lang-text">PL</span>
         </div>
     </div>
-
-    <nav class="fixed top-0 w-full z-[100] px-6 py-8 transition-all duration-500" id="main-nav">
+    <nav class="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-500" id="main-nav">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-4 group cursor-pointer">
-                <img src="static/favicon.ico" class="w-10 h-10 group-hover:rotate-12 transition-transform">
+                <img src="static/favicon.ico" class="w-10 h-10 group-hover:rotate-12 transition-transform" alt="Logo">
                 <span class="text-2xl font-black tracking-tighter uppercase">Ichel<span class="text-[#00ff9d]">1035</span></span>
             </div>
-            <div class="hidden md:flex gap-12 text-[10px] font-black uppercase tracking-[0.4em] opacity-70">
-                <a href="#home" class="hover:text-[#00ff9d] transition" data-t="nav_home">Base</a>
-                <a href="#skills" class="hover:text-[#00ff9d] transition" data-t="nav_skills">Skills</a>
-                <a href="#projects" class="hover:text-[#00ff9d] transition" data-t="nav_work">Work</a>
-                <a href="#schedule" class="hover:text-[#00ff9d] transition" data-t="nav_schedule">Schedule</a>
-                <a href="#contact" class="hover:text-[#00ff9d] transition" data-t="nav_connect">Connect</a>
+            <div class="hidden md:flex gap-10 text-[11px] font-black uppercase tracking-[0.3em] opacity-60">
+                <a href="#home" class="hover:text-[#00ff9d] hover:opacity-100 transition" data-t="nav_home">Base</a>
+                <a href="#skills" class="hover:text-[#00ff9d] hover:opacity-100 transition" data-t="nav_skills">Skills</a>
+                <a href="#projects" class="hover:text-[#00ff9d] hover:opacity-100 transition" data-t="nav_work">Work</a>
+                <a href="#schedule" class="hover:text-[#00ff9d] hover:opacity-100 transition" data-t="nav_schedule">Schedule</a>
+                <a href="#contact" class="hover:text-[#00ff9d] hover:opacity-100 transition" data-t="nav_connect">Connect</a>
             </div>
-            <a href="#contact" class="hidden lg:block bg-[#00ff9d] text-black px-10 py-4 rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all" data-t="nav_btn">Let's Talk</a>
+            <a href="#contact" class="hidden sm:block bg-[#00ff9d] text-black px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:scale-105 transition-all" data-t="nav_btn">Let's Talk</a>
         </div>
     </nav>
-
     <section id="home" class="min-h-screen flex items-center justify-center px-8 pt-20">
-        <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-20 items-center">
+        <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
-                <div class="flex items-center gap-4 mb-8">
-                    <span class="w-12 h-[2px] bg-[#00ff9d]"></span>
-                    <h2 class="text-[#00ff9d] font-black text-[10px] uppercase tracking-[0.6em]" data-t="hero_role">Lead Fullstack Architect</h2>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-8 h-[2px] bg-[#00ff9d]"></span>
+                    <h2 class="text-[#00ff9d] font-bold text-xs uppercase tracking-[0.5em]" data-t="hero_role">Lead Fullstack Architect</h2>
                 </div>
-                <h1 class="clamp-title leading-[0.85] mb-10 uppercase tracking-tighter">
-                    <span data-t="hero_t1">Architecting</span><br>
-                    <span class="italic text-gray-500" data-t="hero_t2">Digital</span> 
-                    <span class="text-[#00ff9d]" data-t="hero_t3">Flow.</span>
+                <h1 class="clamp-title font-black leading-[0.9] mb-8 uppercase">
+                    <span data-t="hero_t1">Architecting</span> <br><span class="italic text-gray-400" data-t="hero_t2">Digital</span> <span class="text-[#00ff9d]" data-t="hero_t3">Flow.</span>
                 </h1>
-                <p class="text-gray-400 max-w-lg mb-14 text-xl font-light leading-relaxed" data-t="hero_desc">
-                    Ekspert w dziedzinie skalowalnych systemów i infrastruktury cloud. Przekształcam złożone problemy w eleganckie rozwiązania. [cite: 132]
+                <p class="text-gray-400 max-w-lg mb-12 text-lg font-light leading-relaxed" data-t="hero_desc">
+                    Expert in scalable systems and cloud infrastructure. I transform complex problems into elegant, high-performance solutions.
                 </p>
-                <div class="flex flex-wrap gap-8">
-                    <a href="#projects" class="bg-[#00ff9d] text-black px-14 py-6 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:translate-y-[-5px] transition-all shadow-xl" data-t="hero_btn1">View Projects</a>
-                    <a href="#contact" class="glass-card px-14 py-6 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white/5 transition-all" data-t="hero_btn2">Contact Me</a>
+                <div class="flex flex-wrap gap-6">
+                    <a href="#projects" class="bg-[#00ff9d] text-black px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-[0_20px_40px_rgba(0,255,157,0.2)] hover:translate-y-[-3px] transition-all" data-t="hero_btn1">View Projects</a>
+                    <a href="#contact" class="glass-card px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white/5 transition-all" data-t="hero_btn2">Contact Me</a>
                 </div>
             </div>
-            <div class="relative flex justify-center" data-aos="zoom-in">
-                <div class="absolute w-[130%] h-[130%] bg-[#00ff9d]/5 blur-[180px] rounded-full"></div>
-                <img src="static/ICHEL1035AWATAR.png" class="hero-avatar w-full max-w-[550px] z-10">
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="py-40 px-8 bg-white/[0.01]">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24">
-            <div data-aos="fade-up">
-                <h3 class="text-5xl font-black uppercase mb-12 tracking-tighter" data-t="skill_title">Stack & <span class="text-[#00ff9d]">Environment</span></h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                    <div class="glass-card p-8 rounded-[2rem] text-center group">
-                        <i class="fab fa-python text-5xl text-[#00ff9d] mb-6 group-hover:scale-110 transition-transform"></i>
-                        <p class="font-black uppercase text-[10px] tracking-widest">Python</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-[2rem] text-center group">
-                        <i class="fas fa-code text-5xl text-[#00ff9d] mb-6 group-hover:scale-110 transition-transform"></i>
-                        <p class="font-black uppercase text-[10px] tracking-widest">C++</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-[2rem] text-center group">
-                        <i class="fab fa-js text-5xl text-[#00ff9d] mb-6 group-hover:scale-110 transition-transform"></i>
-                        <p class="font-black uppercase text-[10px] tracking-widest">JavaScript</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-[2rem] text-center group">
-                        <i class="fab fa-html5 text-5xl text-[#00ff9d] mb-6 group-hover:scale-110 transition-transform"></i>
-                        <p class="font-black uppercase text-[10px] tracking-widest">Web Stack</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-[2rem] text-center group">
-                        <i class="fas fa-terminal text-5xl text-[#00ff9d] mb-6 group-hover:scale-110 transition-transform"></i>
-                        <p class="font-black uppercase text-[10px] tracking-widest">Linux/CLI</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-[2rem] text-center group">
-                        <i class="fab fa-git-alt text-5xl text-[#00ff9d] mb-6 group-hover:scale-110 transition-transform"></i>
-                        <p class="font-black uppercase text-[10px] tracking-widest">Git Logic</p>
-                    </div>
-                </div>
-            </div>
-            <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="text-5xl font-black uppercase mb-12 tracking-tighter" data-t="skill_exp_title">What I <span class="text-[#00ff9d]">Do</span></h3>
-                <div class="glass-card p-8 rounded-[2.5rem] flex items-center gap-8">
-                    <div class="w-20 h-20 bg-[#00ff9d]/10 rounded-3xl flex items-center justify-center text-[#00ff9d] text-3xl italic font-black">#1</div>
-                    <div>
-                        <h4 class="font-black uppercase text-lg mb-1" data-t="exp1_t">Discord Ecosystems</h4>
-                        <p class="text-gray-500 text-sm font-medium" data-t="exp1_d">Advanced automation, moderation systems and custom API integrations.</p>
-                    </div>
-                </div>
-                <div class="glass-card p-8 rounded-[2.5rem] flex items-center gap-8">
-                    <div class="w-20 h-20 bg-[#00ff9d]/10 rounded-3xl flex items-center justify-center text-[#00ff9d] text-3xl italic font-black">#2</div>
-                    <div>
-                        <h4 class="font-black uppercase text-lg mb-1" data-t="exp2_t">Web Applications</h4>
-                        <p class="text-gray-500 text-sm font-medium" data-t="exp2_d">Modern, high-performance websites built with React and Tailwind.</p>
-                    </div>
-                </div>
+            <div class="relative flex justify-center" data-aos="zoom-in" data-aos-delay="200">
+                <div class="absolute w-[120%] h-[120%] bg-[#00ff9d]/5 blur-[150px] rounded-full"></div>
+                <img src="static/ICHEL1035AWATAR.png" class="hero-avatar w-full max-w-[520px] z-10" alt="Ichel">
             </div>
         </div>
     </section>
-
-    <section id="projects" class="py-40 px-8">
+    <section id="skills" class="py-32 px-8 bg-black/10">
         <div class="max-w-7xl mx-auto">
-            <h3 class="text-6xl font-black uppercase mb-20 tracking-tighter" data-t="work_title">Selected <span class="text-[#00ff9d]">Works</span></h3>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="glass-card p-6 rounded-[3rem]" data-aos="fade-up">
-                    <div class="aspect-video bg-black rounded-[2rem] mb-8 overflow-hidden group">
-                        <img src="https://i.imgur.com/5so5uCx.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                    </div>
-                    <div class="px-4">
-                        <span class="text-[10px] text-[#00ff9d] font-black uppercase tracking-widest" data-t="p1_cat">Discord Ops</span>
-                        <h4 class="text-3xl font-black mt-4 mb-6">Unified Bot System</h4>
-                        <p class="text-gray-500 mb-8 font-medium">Zaawansowany system zarządzania społecznością z pełną integracją API.</p>
-                        <div class="flex gap-4">
-                            <span class="px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-black uppercase">Python</span>
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div data-aos="fade-up">
+                    <h3 class="text-4xl font-black uppercase mb-8" data-t="skill_title">Stack & <span class="text-[#00ff9d]">Environment</span></h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div class="glass-card p-6 rounded-2xl text-center">
+                            <i class="fab fa-python text-4xl text-[#00ff9d] mb-4"></i>
+                            <p class="font-bold">Python</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl text-center">
+                            <i class="fas fa-code text-4xl text-[#00ff9d] mb-4"></i>
+                            <p class="font-bold">C++</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl text-center">
+                            <i class="fab fa-js text-4xl text-[#00ff9d] mb-4"></i>
+                            <p class="font-bold">JavaScript</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl text-center">
+                            <i class="fab fa-html5 text-4xl text-[#00ff9d] mb-4"></i>
+                            <p class="font-bold">HTML5 / CSS3</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl text-center">
+                            <i class="fas fa-terminal text-4xl text-[#00ff9d] mb-4"></i>
+                            <p class="font-bold">VS Code</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl text-center">
+                            <i class="fab fa-git-alt text-4xl text-[#00ff9d] mb-4"></i>
+                            <p class="font-bold">Git</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="schedule" class="py-40 px-8 bg-black/20">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-24" data-aos="fade-up">
-                <h3 class="text-6xl font-black uppercase mb-6 tracking-tighter" data-t="sch_title">Availability <span class="text-[#00ff9d]">Hub</span></h3>
-                <div class="inline-flex items-center gap-3 bg-[#00ff9d]/10 border border-[#00ff9d]/20 px-6 py-2 rounded-full">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff9d] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-[#00ff9d]"></span>
-                    </span>
-                    <span class="text-[9px] font-black uppercase tracking-[0.3em] text-[#00ff9d]" data-t="sch_subtitle">Live System Sync</span>
-                </div>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-12">
-                <div class="space-y-8" data-aos="fade-right">
-                    <div class="glass-card p-10 rounded-[3rem]">
-                        <h4 class="font-black uppercase tracking-widest text-xs mb-10 text-[#00ff9d]" data-t="sch_hours_t">Processing Hours</h4>
-                        <div class="space-y-8">
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-4xl font-black uppercase mb-8" data-t="skill_exp_title">What I <span class="text-[#00ff9d]">Do</span></h3>
+                    <div class="space-y-4">
+                        <div class="glass-card p-6 rounded-3xl flex items-center gap-6">
+                            <div class="w-16 h-16 bg-[#00ff9d]/10 rounded-2xl flex items-center justify-center text-[#00ff9d] text-2xl">
+                                <i class="fab fa-discord"></i>
+                            </div>
                             <div>
-                                <p class="text-[9px] text-gray-500 font-black uppercase mb-3" data-t="sch_week">Monday — Friday</p>
-                                <p class="text-3xl font-black italic">16:00 — 20:00</p>
-                            </div>
-                            <div class="pt-8 border-t border-white/5">
-                                <p class="text-[9px] text-gray-500 font-black uppercase mb-3" data-t="sch_weekend">Saturday — Sunday</p>
-                                <p class="text-3xl font-black italic">13:00 — 21:00</p>
+                                <h4 class="font-black uppercase text-sm" data-t="exp1_t">Discord Bots</h4>
+                                <p class="text-gray-500 text-xs mt-1" data-t="exp1_d">Advanced automation, moderation and API integrations.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="glass-card p-8 rounded-[2rem]">
-                        <h5 class="text-[9px] font-black uppercase text-gray-500 mb-6" data-t="sch_legend">Legend</h5>
-                        <div class="space-y-5">
-                            <div class="flex items-center gap-4"><span class="dot-busy w-3 h-3 rounded-full"></span><span class="text-[11px] font-bold uppercase" data-t="sch_l1">System Busy</span></div>
-                            <div class="flex items-center gap-4"><span class="dot-limited w-3 h-3 rounded-full"></span><span class="text-[11px] font-bold uppercase" data-t="sch_l3">Limited Feed</span></div>
+                        <div class="glass-card p-6 rounded-3xl flex items-center gap-6">
+                            <div class="w-16 h-16 bg-[#00ff9d]/10 rounded-2xl flex items-center justify-center text-[#00ff9d] text-2xl">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black uppercase text-sm" data-t="exp2_t">Web Applications</h4>
+                                <p class="text-gray-500 text-xs mt-1" data-t="exp2_d">Modern, responsive websites with focus on UX/UI.</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-2 glass-card p-12 rounded-[4rem]" data-aos="fade-left">
-                    <div class="flex justify-between items-center mb-12">
-                        <h4 class="text-4xl font-black uppercase tracking-tighter" id="calendar-month">Syncing...</h4>
-                    </div>
-                    <div class="calendar-grid mb-6 text-center text-[10px] font-black uppercase text-gray-600 tracking-widest">
-                        <div>Pn</div><div>Wt</div><div>Śr</div><div>Cz</div><div>Pt</div><div class="text-[#00ff9d]">So</div><div class="text-[#00ff9d]">Nd</div>
-                    </div>
-                    <div class="calendar-grid" id="calendar-days">
-                        <div class="col-span-7 py-20 text-center opacity-50 font-black uppercase tracking-widest">Initialising Google Sync...</div>
+                        <div class="glass-card p-6 rounded-3xl flex items-center gap-6">
+                            <div class="w-16 h-16 bg-[#00ff9d]/10 rounded-2xl flex items-center justify-center text-[#00ff9d] text-2xl">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black uppercase text-sm" data-t="exp3_t">Python & Flask</h4>
+                                <p class="text-gray-500 text-xs mt-1" data-t="exp3_d">Scalable backends, REST APIs and dynamic Flask platforms.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <section id="contact" class="py-40 px-8">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32">
+    <section id="projects" class="py-32 px-8 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div data-aos="fade-up">
+                    <h3 class="text-5xl font-black uppercase mb-4" data-t="work_title">Selected <span class="text-[#00ff9d]">Works</span></h3>
+                    <p class="text-gray-500 uppercase tracking-widest text-xs font-bold" data-t="work_subtitle">System engineering at the highest level</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card group p-4 rounded-[2.5rem]" data-aos="fade-up">
+                    <div class="aspect-video bg-[#050505] rounded-[2rem] mb-6 overflow-hidden relative">
+                        <div class="absolute top-4 left-6 z-20 flex gap-1.5">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                        </div>
+                        <img src="https://i.imgur.com/5so5uCx.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Project">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <a href="ichel1035.github.io/botydiscord.html" target="_blank" class="bg-white text-black p-4 rounded-full hover:scale-110 transition"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <span class="text-[10px] text-[#00ff9d] font-bold uppercase tracking-widest" data-t="p1_cat">Discord Bots</span>
+                        <h4 class="text-2xl font-bold mt-2 mb-4 group-hover:text-[#00ff9d] transition">Discord</h4>
+                        <div class="flex gap-2">
+                            <span class="mono text-[8px] px-3 py-1 bg-white/5 rounded-full border border-white/10 uppercase">Python</span>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </section>
+    <section id="schedule" class="py-32 px-8 bg-black/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-5xl font-black uppercase mb-4" data-t="sch_title">Availability <span class="text-[#00ff9d]">Hub</span></h3>
+                <p class="text-gray-500 uppercase tracking-[0.3em] text-[10px] font-bold" data-t="sch_subtitle">Current workflow and processing hours</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-8 items-start">
+                <div class="space-y-4" data-aos="fade-right">
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="flex items-center gap-4 mb-6 text-[#00ff9d]">
+                            <i class="fas fa-clock text-2xl"></i>
+                            <h4 class="font-black uppercase tracking-widest text-sm" data-t="sch_hours_t">Working Hours</h4>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <p class="text-[10px] text-gray-500 font-bold uppercase mb-2" data-t="sch_week">Monday - Friday</p>
+                                <p class="text-2xl font-black italic">16:00 — 20:00</p>
+                            </div>
+                            <div class="pt-4 border-t border-white/5">
+                                <p class="text-[10px] text-gray-500 font-bold uppercase mb-2" data-t="sch_weekend">Saturday - Sunday</p>
+                                <p class="text-2xl font-black italic">13:00 — 21:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h5 class="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-4" data-t="sch_legend">Legend</h5>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 text-xs">
+                                <span class="dot-red w-3 h-3 rounded-full"></span>
+                                <span data-t="sch_l1">Termin zajęty / System Busy</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs">
+                                <span class="dot-yellow w-3 h-3 rounded-full"></span>
+                                <span data-t="sch_l3">Ograniczona dostępność / Limited</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs">
+                                <span class="bg-white/10 w-3 h-3 rounded-full border border-white/20"></span>
+                                <span data-t="sch_l2">Wolne terminy / Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 glass-card p-8 rounded-[2.5rem]" data-aos="fade-left">
+                    <div class="flex justify-between items-center mb-8">
+                        <h4 class="text-2xl font-black uppercase" id="calendar-month">March 2026</h4>
+                        <div class="flex gap-2">
+                             <div class="text-[10px] font-bold text-[#00ff9d] border border-[#00ff9d]/30 px-4 py-1 rounded-full uppercase">Live Calendar</div>
+                        </div>
+                    </div>
+                    <div class="calendar-grid mb-2 text-center text-[10px] font-black uppercase text-gray-500 tracking-widest">
+                        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div class="text-[#00ff9d]">Sat</div><div class="text-[#00ff9d]">Sun</div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-days"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="py-32 px-8">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
             <div data-aos="fade-up">
-                <h3 class="text-7xl font-black uppercase mb-10 leading-[0.85] tracking-tighter" data-t="con_title">Got a <span class="text-[#00ff9d]">Vision?</span></h3>
-                <div class="space-y-6">
-                    <div class="glass-card p-8 rounded-3xl flex items-center gap-6 group">
-                        <div class="w-16 h-16 bg-[#00ff9d]/10 rounded-2xl flex items-center justify-center text-[#00ff9d] group-hover:bg-[#00ff9d] group-hover:text-black transition-all"><i class="fas fa-envelope"></i></div>
-                        <div><p class="text-[10px] text-gray-500 font-black uppercase mb-1">Email</p><p class="font-black text-lg">ichel.kontakt@gmail.com</p></div>
+                <h3 class="text-6xl font-black uppercase mb-8 leading-tight" data-t="con_title">Got a <span class="text-[#00ff9d]">Vision?</span></h3>
+                <p class="text-gray-400 text-lg mb-12" data-t="con_desc">Got a project that needs solid architecture? Write to me and we'll build something extraordinary.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4 group">
+                        <div class="w-12 h-12 bg-[#00ff9d]/10 rounded-xl flex items-center justify-center text-[#00ff9d] group-hover:bg-[#00ff9d] group-hover:text-black transition-all">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Email</p>
+                            <p class="font-bold text-sm">ichel.kontakt@gmail.com</p>
+                        </div>
                     </div>
-                    <div class="glass-card p-8 rounded-3xl flex items-center gap-6 group">
-                        <div class="w-16 h-16 bg-[#00ff9d]/10 rounded-2xl flex items-center justify-center text-[#00ff9d] group-hover:bg-[#00ff9d] group-hover:text-black transition-all"><i class="fab fa-discord"></i></div>
-                        <div><p class="text-[10px] text-gray-500 font-black uppercase mb-1">Discord</p><p class="font-black text-lg">@ichel1035</p></div>
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4 group">
+                        <div class="w-12 h-12 bg-[#00ff9d]/10 rounded-xl flex items-center justify-center text-[#00ff9d] group-hover:bg-[#00ff9d] group-hover:text-black transition-all">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Discord</p>
+                            <p class="font-bold text-sm">ichel1035</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="glass-card p-12 rounded-[4rem] shadow-2xl" data-aos="zoom-in">
-                <div class="space-y-8" id="contact-form">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <input type="text" id="form-name" placeholder="Twoje Imię" class="form-input w-full p-6 rounded-2xl font-bold">
-                        <input type="email" id="form-email" placeholder="Email" class="form-input w-full p-6 rounded-2xl font-bold">
+            <div class="glass-card p-10 rounded-[3rem]" data-aos="zoom-in">
+                <div class="space-y-6" id="contact-form">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-2" data-t="form_name">Your Name</label>
+                            <input type="text" id="form-name" placeholder="John Doe" class="form-input w-full p-4 rounded-xl">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-2">Email</label>
+                            <input type="email" id="form-email" placeholder="john@example.com" class="form-input w-full p-4 rounded-xl">
+                        </div>
                     </div>
-                    <textarea rows="5" id="form-message" placeholder="Brief projektu..." class="form-input w-full p-6 rounded-2xl font-bold"></textarea>
-                    <div id="form-feedback" class="hidden text-[11px] font-black px-6 py-4 rounded-2xl"></div>
-                    <button id="form-submit" onclick="handleFormSubmit()" class="w-full bg-[#00ff9d] text-black py-7 rounded-2xl font-black text-xs uppercase tracking-[0.4em] hover:scale-[1.03] transition-all" data-t="form_btn">Transmit Message</button>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-2" data-t="form_msg">Project Brief</label>
+                        <textarea rows="4" id="form-message" placeholder="..." class="form-input w-full p-4 rounded-xl"></textarea>
+                    </div>
+                    <div id="form-feedback" class="hidden text-sm font-bold px-4 py-3 rounded-xl"></div>
+
+                    <button id="form-submit" onclick="handleFormSubmit()" class="w-full bg-[#00ff9d] text-black py-5 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:scale-[1.02] transition shadow-lg" data-t="form_btn">
+                        Transmit Message
+                    </button>
                 </div>
             </div>
         </div>
     </section>
-
-    <footer class="bg-[#050505] pt-32 pb-16 px-8 border-t border-white/5 text-center md:text-left">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-            <div>
-                <div class="flex items-center gap-4 mb-6">
-                    <img src="static/favicon.ico" class="w-10 h-10">
-                    <span class="text-2xl font-black tracking-tighter uppercase">Ichel<span class="text-[#00ff9d]">1035</span></span>
+    <footer class="bg-[#050505] pt-20 pb-10 px-8 border-t border-white/5 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <img src="static/favicon.ico" class="w-8 h-8" alt="Logo">
+                        <span class="text-xl font-black tracking-tighter uppercase">Ichel<span class="text-[#00ff9d]">1035</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed" data-t="footer_desc">
+                        Architecting high-performance digital ecosystems with a focus on security, scalability, and seamless user experiences.
+                    </p>
                 </div>
-                <p class="text-gray-600 text-[10px] font-black uppercase tracking-widest">© 2026 Architectural Code Unit // All Systems Operational [cite: 124]</p>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-[#00ff9d] mb-8" data-t="f_nav_t">Navigation</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="#home" class="footer-link block" data-t="nav_home">Core Base</a></li>
+                        <li><a href="#projects" class="footer-link block" data-t="nav_work">Work</a></li>
+                        <li><a href="#contact" class="footer-link block" data-t="nav_connect">Connect</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-[#00ff9d] mb-8" data-t="f_spec_t">Specialization</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#00ff9d] rounded-full"></span> Cloud Architecture</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#00ff9d] rounded-full"></span> Fullstack Systems</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#00ff9d] rounded-full"></span> Discord Bots</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-[#00ff9d] mb-8" data-t="f_stat_t">System Status</h4>
+                    <div class="glass-card p-6 rounded-2xl border-white/5">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            </span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest" data-t="stat_msg">Accepting Projects</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="flex items-center gap-3 bg-black px-8 py-4 rounded-full border border-white/10">
-                <span class="text-gray-500 text-[10px] font-black uppercase">Powered by</span>
-                <a href="https://ichmgr.pl" class="flex items-center gap-2"><img src="static/ichmgr.ico" class="w-5 h-5"><span class="text-xs font-black text-white">IchMgr.pl</span></a>
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold text-gray-600 uppercase tracking-[0.2em]">
+                <p>© 2026 Architectural Code Unit // All Systems Operational</p>
+                <div class="flex items-center gap-3 bg-black px-6 py-3 rounded-full border border-white/5">
+                    <span class="text-gray-500 font-black">Powered by</span>
+                    <a href="https://ichmgr.pl" target="_blank" class="flex items-center gap-2 hover:opacity-80 transition">
+                        <img src="static/ichmgr.ico" class="w-5 h-5" alt="IchMgr">
+                        <span class="text-xs font-black tracking-tighter text-white">IchMgr.pl</span>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1200, once: true });
-
-        // KONFIGURACJA GOOGLE API [cite: 156]
-        const API_KEY = 'TWÓJ_KLUCZ_API_GOOGLE'; // Wklej swój klucz tutaj!
-        const CAL_ID = 'ichel.kontakt@gmail.com';
-
-        // TŁUMACZENIA [cite: 131, 140]
+        AOS.init({ duration: 1000, once: true, offset: 100 });
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 1000 } },
+                color: { value: "#00ff9d" },
+                opacity: { value: 0.1 },
+                size: { value: 2 },
+                line_linked: { enable: true, distance: 150, color: "#00ff9d", opacity: 0.1, width: 1 },
+                move: { enable: true, speed: 1.5 }
+            },
+            interactivity: { events: { onhover: { enable: true, mode: "grab" } } },
+            retina_detect: true
+        });
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+        });
         const translations = {
             pl: {
                 nav_home: "Baza", nav_skills: "Umiejętności", nav_work: "Projekty", nav_schedule: "Terminarz", nav_connect: "Kontakt", nav_btn: "Rozmawiajmy",
-                hero_role: "Główny Architekt Fullstack", hero_t1: "Projektowanie", hero_t2: "Cyfrowego", hero_t3: "Przepływu.",
+                hero_role: "Główny Architekt Fullstack",
+                hero_t1: "Projektowanie", hero_t2: "Cyfrowego", hero_t3: "Przepływu.",
                 hero_desc: "Ekspert w dziedzinie skalowalnych systemów i infrastruktury cloud. Przekształcam złożone problemy w eleganckie rozwiązania.",
                 hero_btn1: "Zobacz Projekty", hero_btn2: "Kontakt",
-                skill_title: "Stack & <span class='text-[#00ff9d]'>Środowisko</span>", skill_exp_title: "Co <span class='text-[#00ff9d]'>Robię</span>",
-                exp1_t: "Discord Bots", exp1_d: "Zaawansowana automatyzacja i systemy moderacji.",
-                exp2_t: "Web Applications", exp2_d: "Nowoczesne aplikacje oparte o React i Tailwind.",
-                work_title: "Wybrane <span class='text-[#00ff9d]'>Prace</span>",
-                sch_title: "Centrum <span class='text-[#00ff9d]'>Dostępności</span>", sch_subtitle: "Statusy Live z Google Calendar",
-                sch_hours_t: "Godziny Pracy", sch_week: "Poniedziałek — Piątek", sch_weekend: "Sobota — Niedziela",
-                sch_legend: "Legenda", sch_l1: "Zajęte", sch_l3: "Ograniczone",
+                skill_title: "Stack & <span class='text-[#00ff9d]'>Środowisko</span>",
+                skill_exp_title: "Co <span class='text-[#00ff9d]'>Robię</span>",
+                exp1_t: "Boty Discord", exp1_d: "Zaawansowana automatyzacja, moderacja i integracje API.",
+                exp2_t: "Aplikacje WWW", exp2_d: "Nowoczesne, responsywne strony z naciskiem na UX/UI.",
+                exp3_t: "Python & Flask", exp3_d: "Skalowalne backendy, REST API i dynamiczne platformy Flask.",
+                work_title: "Wybrane <span class='text-[#00ff9d]'>Prace</span>", work_subtitle: "Inżynieria systemowa na najwyższym poziomie",
+                sch_title: "Centrum <span class='text-[#00ff9d]'>Dostępności</span>", sch_subtitle: "Godziny procesowania i statusy",
+                sch_hours_t: "Godziny Pracy", sch_week: "Poniedziałek - Piątek", sch_weekend: "Sobota - Niedziela",
+                sch_legend: "Legenda", sch_l1: "Termin zajęty", sch_l2: "Wolny termin", sch_l3: "Ograniczona dostępność",
+                p1_cat: "Boty Discord",
                 con_title: "Masz <span class='text-[#00ff9d]'>Wizję?</span>",
-                form_btn: "Wyślij Wiadomość", form_sending: "Przesyłanie...", form_success: "✅ Wysłano!", form_error: "❌ Błąd!"
+                con_desc: "Masz projekt, który wymaga solidnej architektury? Napisz do mnie.",
+                form_name: "Twoje Imię", form_msg: "Brief Projektu", form_btn: "Wyślij Wiadomość",
+                footer_desc: "Projektowanie wydajnych ekosystemów cyfrowych z naciskiem na bezpieczeństwo i skalowalność.",
+                f_nav_t: "Nawigacja", f_spec_t: "Specjalizacja", f_stat_t: "Status Systemu", stat_msg: "Przyjmuję Projekty",
+                form_sending: "Wysyłanie...",
+                form_success: "✅ Wiadomość wysłana! Odezwę się wkrótce.",
+                form_error: "❌ Błąd wysyłania. Spróbuj ponownie.",
+                form_fill: "⚠️ Wypełnij wszystkie pola.",
+                tip_client: "Klient", tip_service: "Usługa", tip_status: "Status", tip_limited: "Mogę rzadziej odpisywać. System przeciążony."
             },
             en: {
                 nav_home: "Base", nav_skills: "Skills", nav_work: "Work", nav_schedule: "Schedule", nav_connect: "Connect", nav_btn: "Let's Talk",
-                hero_role: "Lead Fullstack Architect", hero_t1: "Architecting", hero_t2: "Digital", hero_t3: "Flow.",
-                hero_desc: "Expert in scalable systems and cloud infrastructure. I transform complex problems into solutions.",
+                hero_role: "Lead Fullstack Architect",
+                hero_t1: "Architecting", hero_t2: "Digital", hero_t3: "Flow.",
+                hero_desc: "Expert in scalable systems and cloud infrastructure. I transform complex problems into elegant, high-performance solutions.",
                 hero_btn1: "View Projects", hero_btn2: "Contact Me",
-                skill_title: "Stack & <span class='text-[#00ff9d]'>Environment</span>", skill_exp_title: "What I <span class='text-[#00ff9d]'>Do</span>",
-                exp1_t: "Discord Bots", exp1_d: "Advanced automation and moderation systems.",
-                exp2_t: "Web Applications", exp2_d: "Modern web apps built with React/Tailwind.",
-                work_title: "Selected <span class='text-[#00ff9d]'>Works</span>",
-                sch_title: "Availability <span class='text-[#00ff9d]'>Hub</span>", sch_subtitle: "Live Google Sync",
-                sch_hours_t: "Processing Hours", sch_week: "Monday — Friday", sch_weekend: "Saturday — Sunday",
-                sch_legend: "Legend", sch_l1: "Busy", sch_l3: "Limited",
+                skill_title: "Stack & <span class='text-[#00ff9d]'>Environment</span>",
+                skill_exp_title: "What I <span class='text-[#00ff9d]'>Do</span>",
+                exp1_t: "Discord Bots", exp1_d: "Advanced automation, moderation and API integrations.",
+                exp2_t: "Web Applications", exp2_d: "Modern, responsive websites with focus on UX/UI.",
+                exp3_t: "Python & Flask", exp3_d: "Scalable backends, REST APIs and dynamic Flask platforms.",
+                work_title: "Selected <span class='text-[#00ff9d]'>Works</span>", work_subtitle: "System engineering at the highest level",
+                sch_title: "Availability <span class='text-[#00ff9d]'>Hub</span>", sch_subtitle: "Workflow and processing hours",
+                sch_hours_t: "Working Hours", sch_week: "Monday - Friday", sch_weekend: "Saturday - Sunday",
+                sch_legend: "Legend", sch_l1: "System Busy", sch_l2: "Available", sch_l3: "Limited Availability",
+                p1_cat: "Discord Bots",
                 con_title: "Got a <span class='text-[#00ff9d]'>Vision?</span>",
-                form_btn: "Transmit Message", form_sending: "Transmitting...", form_success: "✅ Sent!", form_error: "❌ Error!"
+                con_desc: "Got a project that needs solid architecture? Write to me.",
+                form_name: "Your Name", form_msg: "Project Brief", form_btn: "Transmit Message",
+                footer_desc: "Architecting high-performance digital ecosystems with a focus on security and scalability.",
+                f_nav_t: "Navigation", f_spec_t: "Specialization", f_stat_t: "System Status", stat_msg: "Accepting Projects",
+                form_sending: "Sending...",
+                form_success: "✅ Message sent! I'll get back to you soon.",
+                form_error: "❌ Send error. Please try again.",
+                form_fill: "⚠️ Please fill in all fields.",
+                tip_client: "Client", tip_service: "Service", tip_status: "Status", tip_limited: "I might respond slower. System limited."
             }
         };
-
         let currentLang = 'pl';
-
-        // LOGIKA KALENDARZA GOOGLE [cite: 160, 163]
-        async function fetchCalendarData() {
-            const now = new Date();
-            const start = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-            const end = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString();
-            const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CAL_ID)}/events?key=${API_KEY}&timeMin=${start}&timeMax=${end}&singleEvents=true`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                return data.items || [];
-            } catch { return []; }
+        const langBtn = document.getElementById('lang-toggle');
+        const langText = document.getElementById('lang-text');
+        function updateLanguage() {
+            langText.innerText = currentLang === 'en' ? 'PL' : 'EN';
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+            renderCalendar();
         }
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'pl' : 'en';
+            updateLanguage();
+        });
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'var(--nav-bg)';
+                nav.classList.add('py-4', 'border-b', 'border-white/5');
+            } else {
+                nav.style.background = 'transparent';
+                nav.classList.remove('py-4', 'border-b', 'border-white/5');
+            }
+        });
 
-        async function renderCalendar() { [cite: 167]
+        // --- DANE KALENDARZA ---
+        const busyDays = [15, 16, 17, 18, 19, 20, 25];
+        const limitedDays = [5, 7, 8, 12, 21, 22, 23, 24, 26]; // Nowe żółte dni
+
+        const dayDetails = {
+            15: { client: "tokio.v2_", service: "Minecraft ItemShop" },
+            16: { client: "tokio.v2_", service: "Minecraft ItemShop" },
+            17: { client: "natalcia1142", service: "Discord Bot" },
+            18: { client: "natalcia1142", service: "Discord Bot" },
+            19: { client: "itzz_unri", service: "Hosting Infrastructure" },
+            20: { client: "Ichel1035", service: "Infrastructure" },
+            20: { client: "sdds", service: "Infrastructure" }
+        };
+
+        function renderCalendar() {
             const container = document.getElementById('calendar-days');
             const monthLabel = document.getElementById('calendar-month');
-            const events = await fetchCalendarData();
-            
             const now = new Date();
             const year = now.getFullYear();
             const month = now.getMonth();
-            const months = currentLang === 'pl' ? ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"] : ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            const monthNamesPL = ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"];
+            const monthNamesEN = ["January","February","March","April","May","June","July","August","September","October","November","December"];
             
-            monthLabel.innerText = `${months[month]} ${year}`;
+            monthLabel.innerText = `${currentLang === 'pl' ? monthNamesPL[month] : monthNamesEN[month]} ${year}`;
             
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const offset = firstDay === 0 ? 6 : firstDay - 1;
-
             container.innerHTML = '';
-            for(let i=0; i<offset; i++) container.innerHTML += `<div class="calendar-day opacity-0"></div>`;
+            
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            for(let i = 0; i < startOffset; i++) {
+                container.innerHTML += `<div class="calendar-day opacity-0"></div>`;
+            }
 
-            for(let d=1; d<=daysInMonth; d++) {
-                const dayEvent = events.find(e => new Date(e.start.dateTime || e.start.date).getDate() === d);
-                const isWeekend = new Date(year, month, d).getDay() % 6 === 0;
+            const t = translations[currentLang];
+
+            for(let day = 1; day <= daysInMonth; day++) {
+                const isBusy = busyDays.includes(day);
+                const isLimited = limitedDays.includes(day);
+                const dateObj = new Date(year, month, day);
+                const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
                 
-                let status = '';
-                if(dayEvent) {
-                    const isBusy = dayEvent.summary.toUpperCase().includes('BUSY');
-                    status = `
-                        <span class="status-dot ${isBusy ? 'dot-busy' : 'dot-limited'}"></span>
+                let dotHtml = '';
+                let tooltipHtml = '';
+
+                if (isBusy) {
+                    const info = dayDetails[day] || { client: "???", service: "???" };
+                    dotHtml = `<span class="status-dot dot-busy"></span>`;
+                    tooltipHtml = `
                         <div class="day-tooltip">
-                            <p class="font-black uppercase mb-1 ${isBusy ? 'text-red-400' : 'text-yellow-400'}">${isBusy ? 'BUSY' : 'LIMITED'}</p>
-                            <p class="opacity-70 border-t border-white/10 pt-2">${dayEvent.summary}</p>
+                            <p class="text-[#ff5f56] font-black uppercase mb-1">BUSY</p>
+                            <p class="border-t border-white/10 pt-1"><b>${t.tip_client}:</b> ${info.client}</p>
+                            <p><b>${t.tip_service}:</b> ${info.service}</p>
+                        </div>
+                    `;
+                } else if (isLimited) {
+                    dotHtml = `<span class="status-dot dot-yellow"></span>`;
+                    tooltipHtml = `
+                        <div class="day-tooltip">
+                            <p class="text-[#ffbd2e] font-black uppercase mb-1">LIMITED</p>
+                            <p class="border-t border-white/10 pt-1">${t.tip_limited}</p>
                         </div>
                     `;
                 }
 
-                container.innerHTML += `<div class="calendar-day group ${isWeekend ? 'text-[#00ff9d]' : ''}">${d}${status}</div>`;
+                container.innerHTML += `
+                    <div class="calendar-day bg-white/5 border border-white/5 ${isWeekend ? 'text-[#00ff9d]' : ''} group">
+                        ${day}
+                        ${dotHtml}
+                        ${tooltipHtml}
+                    </div>
+                `;
             }
         }
 
-        // OBSŁUGA UI I FORMULARZA [cite: 130, 152, 180]
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            document.getElementById('theme-icon').className = document.body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
-        });
-
-        document.getElementById('lang-toggle').addEventListener('click', () => {
-            currentLang = currentLang === 'pl' ? 'en' : 'pl';
-            document.getElementById('lang-text').innerText = currentLang.toUpperCase();
-            document.querySelectorAll('[data-t]').forEach(el => {
-                const key = el.getAttribute('data-t');
-                if(translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
-            });
-            renderCalendar();
-        });
-
-        async function handleFormSubmit() { [cite: 184]
-            const btn = document.getElementById('form-submit');
+        const WORKER_URL = 'https://tight-art-7986.ichel-kontakt.workers.dev/';
+        async function handleFormSubmit() {
+            const name    = document.getElementById('form-name').value.trim();
+            const email   = document.getElementById('form-email').value.trim();
+            const message = document.getElementById('form-message').value.trim();
+            const btn     = document.getElementById('form-submit');
             const feedback = document.getElementById('form-feedback');
             const t = translations[currentLang];
-            
-            btn.classList.add('opacity-50', 'pointer-events-none');
+            if (!name || !email || !message) {
+                showFeedback(feedback, t.form_fill, 'warn');
+                return;
+            }
+            btn.classList.add('btn-loading');
             btn.innerHTML = `<span class="spin">⟳</span> ${t.form_sending}`;
-
+            feedback.classList.add('hidden');
             try {
-                const res = await fetch('https://tight-art-7986.ichel-kontakt.workers.dev/', {
+                const res = await fetch(WORKER_URL, {
                     method: 'POST',
-                    body: JSON.stringify({ name: document.getElementById('form-name').value, email: document.getElementById('form-email').value, message: document.getElementById('form-message').value })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message })
                 });
-                if(res.ok) {
-                    feedback.innerHTML = t.form_success;
-                    feedback.className = "text-green-400 bg-green-400/10 p-4 rounded-xl block";
-                } else throw new Error();
-            } catch {
-                feedback.innerHTML = t.form_error;
-                feedback.className = "text-red-400 bg-red-400/10 p-4 rounded-xl block";
+                if (res.ok) {
+                    showFeedback(feedback, t.form_success, 'success');
+                    btn.classList.add('btn-success');
+                    btn.innerHTML = '✅ Sent';
+                    document.getElementById('form-name').value = '';
+                    document.getElementById('form-email').value = '';
+                    document.getElementById('form-message').value = '';
+                    setTimeout(() => {
+                        btn.classList.remove('btn-loading', 'btn-success');
+                        btn.innerHTML = t.form_btn;
+                    }, 4000);
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (err) {
+                showFeedback(feedback, t.form_error, 'error');
+                btn.classList.remove('btn-loading');
+                btn.classList.add('btn-error');
+                btn.innerHTML = t.form_btn;
+                setTimeout(() => {
+                    btn.classList.remove('btn-error');
+                }, 3000);
             }
-            btn.classList.remove('opacity-50', 'pointer-events-none');
-            btn.innerHTML = t.form_btn;
         }
-
-        // INIT [cite: 127, 196]
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 60 }, color: { value: "#00ff9d" },
-                opacity: { value: 0.1 }, line_linked: { enable: true, opacity: 0.05 },
-                move: { speed: 1 }
+        function showFeedback(el, msg, type) {
+            el.classList.remove('hidden', 'text-green-400', 'text-red-400', 'text-yellow-400', 'bg-green-400/10', 'bg-red-400/10', 'bg-yellow-400/10');
+            if (type === 'success') {
+                el.classList.add('text-green-400', 'bg-green-400/10');
+            } else if (type === 'error') {
+                el.classList.add('text-red-400', 'bg-red-400/10');
+            } else {
+                el.classList.add('text-yellow-400', 'bg-yellow-400/10');
             }
-        });
-
+            el.textContent = msg;
+        }
+        updateLanguage();
         renderCalendar();
     </script>
 </body>
