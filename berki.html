@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BerkiStore - Nowa Era Kodowania</title>
-    <!-- Ikony FontAwesome i Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Zaawansowane Zmienne i Reset --- */
         :root {
             --bg-dark: #050508;
             --bg-card: #0b0b12;
@@ -48,7 +46,6 @@
             flex-direction: column;
         }
 
-        /* Ambient Background */
         body::before {
             content: '';
             position: fixed;
@@ -73,7 +70,6 @@
             z-index: -1;
         }
 
-        /* --- Ekskluzywny Panel Nawigacji --- */
         header {
             position: fixed;
             top: 25px;
@@ -187,7 +183,6 @@
             box-shadow: 0 0 12px var(--primary-orange);
         }
 
-        /* --- EFEKT KINEMATYCZNEGO PRZEJŚCIA PODSTRON --- */
         .page-section {
             display: none;
             min-height: 80vh;
@@ -197,7 +192,6 @@
             width: 100%;
             flex-grow: 1;
             
-            /* Stan wyjściowy do animacji wczytania podstrony */
             opacity: 0;
             transform: translateY(35px) scale(0.99);
             filter: blur(5px);
@@ -213,7 +207,6 @@
             filter: blur(0);
         }
 
-        /* --- SEKCJA 1: HOME --- */
         .hero-wrapper {
             text-align: center;
             padding: 60px 0;
@@ -341,7 +334,6 @@
             letter-spacing: 1px;
         }
 
-        /* --- SEKCJA 2: ROZBUDOWANY I PRZYKUWAJĄCY OKO CENNIK --- */
         .section-header {
             text-align: center;
             margin-bottom: 70px;
@@ -383,7 +375,6 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
-        /* Przykuwająca wzrok linia poświaty góry karty */
         .price-card::before {
             content: '';
             position: absolute;
@@ -405,7 +396,6 @@
             opacity: 1;
         }
 
-        /* Specjalny badge dla unikalności */
         .card-badge-tag {
             position: absolute;
             top: 25px; right: 25px;
@@ -519,7 +509,6 @@
             filter: brightness(1.1);
         }
 
-        /* --- SEKCJA 3: JAK ZAPŁACIĆ --- */
         .timeline {
             max-width: 900px;
             margin: 0 auto;
@@ -570,7 +559,6 @@
             line-height: 1.6;
         }
 
-        /* --- SEKCJA 4: FAQ --- */
         .faq-container {
             max-width: 850px;
             margin: 0 auto;
@@ -627,7 +615,6 @@
             transform: rotate(180deg);
         }
 
-        /* --- SEKCJA 5: KONTAKT --- */
         .contact-grid {
             max-width: 650px;
             margin: 0 auto;
@@ -663,7 +650,6 @@
             color: var(--primary-orange);
         }
 
-        /* --- PIĘKNA I SFEKTYWNA STOPKA (FOOTER) --- */
         footer {
             background: #07070d;
             border-top: 1px solid rgba(255, 94, 0, 0.1);
@@ -769,7 +755,6 @@
             font-size: 13px;
         }
 
-        /* --- PANEL KOSZYKA (SIDEBAR) --- */
         .cart-sidebar {
             position: fixed;
             top: 0; right: -460px;
@@ -894,7 +879,6 @@
         }
         .cart-blur-overlay.open { display: block; }
 
-        /* --- Toast Notify --- */
         .toast-notify {
             position: fixed; bottom: 30px; left: 30px;
             background: #10b981; color: #fff;
@@ -906,7 +890,6 @@
         }
         .toast-notify.visible { transform: translateY(0); opacity: 1; }
 
-        /* --- Responsywność --- */
         .menu-toggle { display: none; font-size: 24px; color: #fff; cursor: pointer; }
 
         @media (max-width: 992px) {
@@ -929,7 +912,6 @@
 
     <div class="bg-glow-orb"></div>
 
-    <!-- Panel Nawigacyjny -->
     <header id="mainHeader">
         <div class="logo">
             <i class="fa-solid fa-fire"></i>BerkiStore
@@ -952,7 +934,6 @@
         </div>
     </header>
 
-    <!-- System Koszyka -->
     <div class="cart-blur-overlay" id="cartOverlay" onclick="manageCartSidebar(false)"></div>
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-title-row">
@@ -981,7 +962,6 @@
         </div>
     </div>
 
-    <!-- SEKCJA 1: STRONA GŁÓWNA -->
     <section id="home" class="page-section active-section">
         <div class="hero-wrapper">
             <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Zoptymalizowany kod Pythona</div>
@@ -1009,7 +989,6 @@
         </div>
     </section>
 
-    <!-- SEKCJA 2: ODŚWIEŻONY CENNIK (EYE-CATCHER) -->
     <section id="cennik" class="page-section">
         <div class="section-header">
             <h2>Nasza <span>Oferta</span> i Cennik</h2>
@@ -1017,7 +996,6 @@
         </div>
 
         <div class="pricing-grid">
-            <!-- Paczki -->
             <div class="price-card">
                 <div class="card-badge-tag">Minecraft</div>
                 <div class="card-icon-box"><i class="fa-solid fa-box-open"></i></div>
@@ -1055,7 +1033,6 @@
                 </div>
             </div>
 
-            <!-- Skrypty i Pluginy -->
             <div class="price-card">
                 <div class="card-badge-tag">Rozszerzenia</div>
                 <div class="card-icon-box"><i class="fa-solid fa-code"></i></div>
@@ -1095,7 +1072,6 @@
                 </div>
             </div>
 
-            <!-- Boty Discord -->
             <div class="price-card">
                 <div class="card-badge-tag">D.py Professional</div>
                 <div class="card-icon-box"><i class="fa-brands fa-discord"></i></div>
@@ -1135,7 +1111,6 @@
         </div>
     </section>
 
-    <!-- SEKCJA 3: JAK ZAPŁACIĆ -->
     <section id="payment" class="page-section">
         <div class="section-header">
             <h2>Jak <span>Zapłacić</span> za produkty?</h2>
@@ -1188,7 +1163,6 @@
         </div>
     </section>
 
-    <!-- FAQ KOMPONENT -->
     <section class="page-section" style="display: block; min-height: auto; padding-top: 20px;" id="faq-section">
         <div class="section-header">
             <h2>Często Zadawane <span>Pytania</span></h2>
@@ -1206,7 +1180,6 @@
         </div>
     </section>
 
-    <!-- SEKCJA 5: KONTAKT -->
     <section id="kontakt" class="page-section">
         <div class="section-header">
             <h2>Napisz do <span>Nas</span></h2>
@@ -1222,7 +1195,6 @@
         </div>
     </section>
 
-    <!-- PIĘKNA NOWA STOPKA -->
     <footer>
         <div class="footer-container">
             <div class="footer-brand">
@@ -1257,14 +1229,11 @@
         </div>
     </footer>
 
-    <!-- Powiadomienie Toast -->
     <div class="toast-notify" id="toastBox">
         <i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Dodano pomyślnie!</span>
     </div>
 
-    <!-- --- SILNIK JAVASCRIPT --- -->
     <script>
-        // Obsługa stylów nagłówka podczas scrollowania
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
             if (window.scrollY > 40) {
@@ -1274,14 +1243,12 @@
             }
         });
 
-        // KINEMATYCZNA NAWIGACJA Z FILTRAMI BLUR
         function navigate(targetId) {
             const currentSection = document.querySelector('.page-section.active-section');
             const targetSection = document.getElementById(targetId);
             
             if (currentSection && currentSection.id === targetId) return;
 
-            // Ukrycie aktualnej sekcji (animacja zanikania)
             if (currentSection) {
                 currentSection.style.opacity = '0';
                 currentSection.style.transform = 'translateY(-20px) scale(0.98)';
@@ -1290,7 +1257,7 @@
                 setTimeout(() => {
                     currentSection.classList.remove('active-section');
                     triggerInAnimation(targetSection, targetId);
-                }, 250); // czas zgrany z CSS opóźnieniem
+                }, 250);
             } else {
                 triggerInAnimation(targetSection, targetId);
             }
@@ -1299,25 +1266,20 @@
         function triggerInAnimation(targetSection, targetId) {
             if(!targetSection) return;
 
-            // Przygotowanie nowej sekcji pod efekt wejścia
             targetSection.style.opacity = '0';
             targetSection.style.transform = 'translateY(35px) scale(0.99)';
             targetSection.style.filter = 'blur(6px)';
             targetSection.classList.add('active-section');
 
-            // Kontrola sekcji FAQ na stronie głównej
             const faqBlock = document.getElementById('faq-section');
             faqBlock.style.display = (targetId === 'home') ? 'block' : 'none';
 
-            // Wymuszenie odświeżenia stylów przeglądarki (Reflow)
             targetSection.offsetHeight;
 
-            // Uruchomienie kinematycznego wejścia
             targetSection.style.opacity = '1';
             targetSection.style.transform = 'translateY(0) scale(1)';
             targetSection.style.filter = 'blur(0)';
 
-            // Aktualizacja aktywnego elementu w menu
             const links = document.querySelectorAll('.nav-link');
             links.forEach(l => l.classList.remove('active'));
             const activeLink = Array.from(links).find(l => {
@@ -1335,14 +1297,11 @@
             document.getElementById('navLinks').classList.toggle('mobile-open');
         }
 
-        // Akordeon FAQ
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
                 q.parentElement.classList.toggle('open');
             });
         });
-
-        // --- OBSŁUGA KOSZYKA I INTEGRACJA TIPPLY ---
         let shoppingCart = [];
 
         function manageCartSidebar(status) {
